@@ -1,29 +1,11 @@
 "use strict";
 
 var gulp = require("gulp");  //подключил сам галп
-
 var less = require("gulp-less");  //подключил декодер less-css
 var sourcemap = require("gulp-sourcemaps");  //подключил карту исходников
 var server = require("browser-sync").create();  //подключил локальный веб-сервер
-
 var plumber = require("gulp-plumber");  //подключил гаситель критичности ошибок
-
-// var postcss = require("gulp-postcss");  //подключил плагин postcss(для работы автопрефиксера)
-// var autoprefixer = require("autoprefixer");  //подключил сам автопрефиксер
-
-// var rename = require("gulp-rename");  //подключил галп-переименователь
 var del = require("del");  //подключил галп-удалятель
-
-// var imagemin = require("gulp-imagemin");  //подключил 4 плагина по оптимизации изображений
-// var webp = require("gulp-webp");  //подключил оптимизатор webp
-
-// var minhtml = require("gulp-minimize");  //минификатор html
-// var csso = require("gulp-csso");  //подключил минификатор css
-// var minjs = require("gulp-uglify");  //минификатор js
-
-// var svgstore = require("gulp-svgstore");  //подключил сборщик svg-спрайта
-// var posthtml = require("gulp-posthtml");  //подключил post-html
-// var include = require("posthtml-include");  //и плагин инклюд для него
 
 
 
@@ -70,6 +52,31 @@ gulp.task("server", function () {
   gulp.watch("source/less/**/*.less", gulp.series("css-dev"));
   gulp.watch("source/*.html").on("change", server.reload);
 });
+
+
+
+// Временно урезанная сборка проекта
+gulp.task("build", gulp.series("css-dev", "clean"));
+
+//Сборка проекта + запуск локального сервера
+gulp.task("start", gulp.series("build", "server"));
+
+
+
+
+
+
+// var postcss = require("gulp-postcss");  //подключил плагин postcss(для работы автопрефиксера)
+// var autoprefixer = require("autoprefixer");  //подключил сам автопрефиксер
+// var rename = require("gulp-rename");  //подключил галп-переименователь
+// var imagemin = require("gulp-imagemin");  //подключил 4 плагина по оптимизации изображений
+// var webp = require("gulp-webp");  //подключил оптимизатор webp
+// var minhtml = require("gulp-minimize");  //минификатор html
+// var csso = require("gulp-csso");  //подключил минификатор css
+// var minjs = require("gulp-uglify");  //минификатор js
+// var svgstore = require("gulp-svgstore");  //подключил сборщик svg-спрайта
+// var posthtml = require("gulp-posthtml");  //подключил post-html
+// var include = require("posthtml-include");  //и плагин инклюд для него
 
 /*
 //Минимизация css и закидывание его в продакшн
@@ -137,15 +144,8 @@ gulp.task("untrack", function () {
 });
 */
 
-
-// Временно урезанная сборка проекта
-gulp.task("build", gulp.series("css-dev", "clean", "copy"));
-
 //Сборка проекта
 // gulp.task("build", gulp.series("css-dev", "clean", "copy", "css-prod", "compress-js", "images", "webp", "sprite", "html", "untrack"));
 
-//Сборка проекта + запуск локального сервера
-gulp.task("start", gulp.series("build", "server"));
-
 //Тестирование в препродакшене (обязательно после npm run build и без untrack в билде)
-gulp.task("prepro", gulp.series("css-dev", "copy", "css-prod", "html"));
+// gulp.task("prepro", gulp.series("css-dev", "copy", "css-prod", "html"));

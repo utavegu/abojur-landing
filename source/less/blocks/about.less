@@ -1,0 +1,58 @@
+.about {
+	background-color: @background-white;
+}
+
+.about .container {
+	padding-top: 200px;
+	padding-left: 99px;
+	padding-right: 99px;
+
+	border: 1px solid blue;
+
+	display: grid;
+	grid-template-columns: 1fr 276px;
+	grid-template-rows: auto repeat(1fr) ;
+	grid-template-areas:
+		"h h"
+		"cb al"
+		"co co"
+		"c4 ."
+		"si sd"
+		"c5 .";
+}
+
+.about .container > * {
+	border: 1px solid green;
+}
+
+.about__header {
+	grid-area: h;
+}
+
+.about__content-block {
+	grid-area: cb;
+}
+
+.about__article-link {
+	grid-area: al;
+}
+
+.about__content--other {
+	grid-area: co;
+}
+
+.about__content--4 {
+	grid-area: c4;
+}
+
+.about__content--5 {
+	grid-area: c5;
+}
+
+.about__sample-img {
+	grid-area: si;
+}
+
+.about__sample-description {
+	grid-area: sd;
+}
