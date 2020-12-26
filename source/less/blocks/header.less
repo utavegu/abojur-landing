@@ -1,8 +1,57 @@
 .main-header {
-  background-color: @background-white;
+  .small-text;
+  padding-top: 27px;
+  padding-bottom: 29px;
 }
 
 .main-header .container {
   display: grid;
-  grid-template-columns: 1fr 174px 272px 36px;
+  grid-template-columns: 1fr 174px 272px auto;
+  column-gap: 45px;
+}
+
+.main-header__phone {
+  position: relative;
+  color: inherit;
+  text-align: center;
+}
+
+.main-header__phone span {
+  text-decoration: underline;
+}
+
+.main-header__phone::before {
+  .pseudo-element;
+  background-image: url("../img/svg/phone.svg");
+  width: 18px;
+  height: 18px;
+  top: 0;
+  left: 0;
+}
+
+.main-header__address {
+  position: relative;
+  padding-left: 10px;
+  font-style: normal;
+  text-align: center;
+}
+
+.main-header__address::before {
+  .pseudo-element;
+  background-image: url("../img/svg/placemark.svg");
+  width: 16px;
+  height: 20px;
+  top: 0;
+  left: 0; 
+}
+
+.main-header__menu {
+  background-image: url("../img/svg/menu.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 36px;
+  height: 32px;
+  margin-top: 10px;
+  border: none;
+  background-color: transparent;
 }

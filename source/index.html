@@ -29,13 +29,14 @@
 	<header class="main-header">
 		<div class="container">
 			<h1 class="visually-hidden">Студия дизайнерского текстиля "Abojur"</h1>
-			<img src="img/logo.png" alt="Abojur - студия дизайнерского текстиля в Санкт Петербурге" width="375" height="52">
-			<p>
-				<a class="main-footer__phone" href="tel:+79818574624">+7 (981) 857-46-24</a>заказать звонок
-			</p>
-			<address>Санкт Петербург, набережная реки Карповки, дом 5, литер П</address>
-			<button><span class="visually-hidden">Меню</span></button>
-			<!-- Сделай контентным меню... вроде в мастерских где-то было -->
+      <img src="img/logo.png" alt="Abojur - студия дизайнерского текстиля в Санкт Петербурге" width="375" height="52">
+      <!-- Давай-ка лучше картинкой только Абажур будет, а текст пусть браузером рендерится, а то паливно -->
+      <a class="main-header__phone" href="tel:+79818574624">+7 (981) 857-46-24 <span>заказать звонок</span></a>
+			<address class="main-header__address">Санкт Петербург, набережная реки Карповки, дом 5, литер П</address>
+			<button class="main-header__menu">
+        <span class="visually-hidden">Меню</span>
+      </button>
+			<!-- Сделай контентным меню... вроде в мастерских где-то было. Разворачивай по клику, а не по ховеру -->
 		</div>
 	</header>
 
@@ -44,7 +45,7 @@
 		<section class="promo">
 			<div class="container">
 				<h2 class="visually-hidden">Промо</h2>
-				<strong>Cоздадим эмоцию вашего интерьера</strong>
+				<strong class="heading">Cоздадим эмоцию вашего интерьера</strong>
 				<p>Интерьерный текстиль по индивидуальным размерам с доставкой на дом</p>
 				<a class="button" href="#">Получить консультацию</a>
 			</div>
@@ -52,7 +53,7 @@
 
 		<section class="about">
 			<div class="container">
-				<h2 class="about__header">О компании</h2>
+				<h2 class="about__header heading">О компании</h2>
 				<div class="about__content-block">
 					<p class="about__content about__content--1">Дорогие друзья! От имени команды Artendo textile studio, приветствую Вас на нашем сайте.</p>
 					<p class="about__content about__content--2">Премиальный европейский текстиль – одно из самых главных направлений работы коллектива. Создавать неповторимые интерьеры для наших дорогих клиентов, уделяя внимание мельчайшим деталям – вот то,  что по-настоящему вдохновляет дизайнеров нашей студии.</p>
@@ -72,7 +73,7 @@
 		<section class="production">
 			<div class="container">
 				<h2 class="visually-hidden">Наша продукция</h2>
-				<strong>Для вас только самое лучшее</strong>
+				<strong class="heading">Для вас только самое лучшее</strong>
 				<ul class="production__card-list">
 					<li class="production__card-item">
 						<img src="" alt="">
@@ -88,7 +89,7 @@
 		<section class="solutions">
 			<div class="container">
 				<h2 class="visually-hidden">Готовые решения</h2>
-				<strong>Нам есть, чем гордиться!</strong>	
+				<strong class="heading">Нам есть, чем гордиться!</strong>	
 				<div class="slider">
 					<img class="slider__image" src="" width="968" height="660" alt="Пример оформления коттеджа">
 					<div class="overlay">
@@ -108,7 +109,7 @@
 		<section class="mission">
 			<div class="container">
 				<div class="mission__text-content">
-					<h2>Наша миссия и видение</h2>
+					<h2 class="heading">Наша миссия и видение</h2>
 					<p>Мы не хотим просто делать текстиль. Мы хотим, чтобы он  был  исключительным  и отличался, сохраняя качество на максимальном уровне.</p>
 					<p>Продукты ABOJUR гарантируют вам оригинальный дизайн с превосходной отделкой ткани и изумительными элементами декора, которые сделают ваш интерьер уникальным.</p>
 				</div>
@@ -118,7 +119,7 @@
 
 		<section class="team">
 			<div class="container">
-				<h2 class="team__header">Наша творческая команда</h2>
+				<h2 class="team__header heading">Наша творческая команда</h2>
 				<div class="team__content-block">
 					<p>Мы - студия текстиля и дизайна, которая хочет стать частью большой истории. Будь то уютный стул, цветочное растение или стена, которую нужно разрушить, чтобы расширить комнату, все это одинаково важно для нас.</p>
 					<p>Работая по всей России, мы заботимся о том, как ваше пространство выглядит, чувствует и говорит. Все проекты созданы для людей. И это наш приоритет.</p>
@@ -128,28 +129,32 @@
 		</section>
 
 		<section class="advantages">
-			<h2 class="visually-hidden">Преимущества</h2>
-			<strong>Метаморфозы</strong>
-			<p>В нашем ассортименте представлено 258 коллекций, новые поставки происходят регулярно так как мы следим   за трендами, актуальными новинками и посещаем международные выставки.</p>
-			<img src="" alt="">
-			<img src="" alt="">
-			<img src="" alt="">
-			<img src="" alt="">
-			<img src="" alt="">
-			<img src="" alt="">
+      <div class="container">
+        <h2 class="visually-hidden">Преимущества</h2>
+        <strong class="heading">Метаморфозы</strong>
+        <p>В нашем ассортименте представлено 258 коллекций, новые поставки происходят регулярно так как мы следим   за трендами, актуальными новинками и посещаем международные выставки.</p>
+        <img src="" alt="">
+        <img src="" alt="">
+        <img src="" alt="">
+        <img src="" alt="">
+        <img src="" alt="">
+        <img src="" alt="">
+      </div>
 		</section>
 
 		<section class="feedback">
-			<h2>Форма обратной связи</h2>
-			<strong>Мы всегда рады общению</strong>
-			<p>Оставьте свои контакты. Менеджер перезвонит в удобное вам время и ответит на все вопросы.</p>
-			<form action="">
-				<input type="text">
-				<input type="text">
-				<input type="options">
-				<input type="checkbox">
-				<button class="button" type="submit">Оставить заявку</button>
-			</form>
+      <div class="container">
+        <h2 class="visually-hidden">Форма обратной связи</h2>
+        <strong class="heading">Мы всегда рады общению</strong>
+        <p>Оставьте свои контакты. Менеджер перезвонит в удобное вам время и ответит на все вопросы.</p>
+        <form action="">
+          <input type="text">
+          <input type="text">
+          <input type="options">
+          <input type="checkbox">
+          <button class="button" type="submit">Оставить заявку</button>
+        </form>
+      </div>
 		</section>
 
 	</main>

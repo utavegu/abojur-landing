@@ -9,10 +9,15 @@ html {
 }
 
 body {
-  font-family: "Montserrat", "Arial", sans-serif;
-  font-weight: 500;
   margin: 0;
   padding: 0;
+
+  .light-background;
+
+  font-family: "Montserrat", "Arial", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
 }
 
 a {
@@ -42,7 +47,7 @@ img {
   margin: 0 auto;
 }
 
-h1, h2, h3, h4, h5, h6, strong {
+.heading {
   font-family: "OldStandardTT", "Times New Roman", serif;
   font-weight: 400;
 }
@@ -51,16 +56,18 @@ h1, h2, h3, h4, h5, h6, strong {
   font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 700;
   font-size: 21px;
+  text-transform: uppercase;
 
   display: inline-block;
-  padding: 17px 45px;
   text-align: center;
   vertical-align: middle;
   color: #ffffff;
-  text-transform: uppercase;
   background-color: #000000;
+
+  padding: 20px 20px;
   border: none;
-  min-width: 278px;
+  min-width: 200px;
+
   cursor: pointer;
 
   &:hover {
