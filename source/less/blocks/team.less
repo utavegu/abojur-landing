@@ -1,3 +1,29 @@
 .team {
 	background-color: @background-gray;
 }
+
+.team .container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	grid-template-areas: 
+		"heading ."
+		"content emphasis";
+	border: 1px solid blue;
+}
+
+.team .container > * {
+	border: 1px solid red;
+}
+
+.team__header {
+	grid-area: heading;
+}
+
+.team__content-block {
+	grid-area: content;
+}
+
+.team__experience {
+	grid-area: emphasis;
+}
