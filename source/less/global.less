@@ -12,7 +12,7 @@ body {
   margin: 0;
   padding: 0;
 
-  .light-background;
+  .light-scheme;
 
   font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 500;
@@ -50,33 +50,42 @@ img {
 .heading {
   font-family: "OldStandardTT", "Times New Roman", serif;
   font-weight: 400;
+  font-size: 46px;
+  line-height: 64px;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
 }
 
 .button {
   font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 700;
-  font-size: 21px;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
   text-transform: uppercase;
+  color: @light-brown-color;
 
   display: inline-block;
-  text-align: center;
   vertical-align: middle;
-  color: #ffffff;
-  background-color: #000000;
-
-  padding: 20px 20px;
-  border: none;
-  min-width: 200px;
+  
+  min-width: 228px;
+  padding: 17px 17px;
+  border-top: 1px solid @light-brown-color;
+  border-bottom: 1px solid @light-brown-color;
+  
+  
 
   cursor: pointer;
 
   &:hover {
-    background-color: #669ec0;
+    text-shadow: 1px 1px 1px @dark-brown-color;
   }
 
   &:active {
-    background-color: #5496bd;
+    // background-color: #5496bd;
     color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 
   &:disabled {

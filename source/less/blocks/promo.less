@@ -1,13 +1,25 @@
 .promo {
-  .dark-background;
+  .dark-scheme;
+  position: relative;
+  background-color: rgba(52,50,53,0.9);
+}
+
+.promo::before {
+  content: "";
+  position: absolute;
+  background-image: url("../img/ornament-1.png");
+  background-size: cover;
+  image-rendering: pixelated;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 .promo .container {
-	padding-top: 80px;
-	padding-left: 199px;
-	padding-right: 693px;
-
   position: relative;
+
+  padding-top: 80px;
+  padding-left: 99px;
 }
 
 .promo .container::after {
@@ -17,4 +29,19 @@
 	background-image: url("../img/promo-1.jpg");
 	top: 0;
   right: 0;
+  margin-top: 80px;
+}
+
+.promo__header {
+  display: block;
+  width: 474px;
+}
+
+.promo__description {
+  width: 434px;
+  opacity: 0.6;
+}
+
+.promo__button {
+  margin-bottom: 80px;
 }
