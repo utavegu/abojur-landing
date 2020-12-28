@@ -1,19 +1,29 @@
 .team {
-	.dark-scheme;
+  .dark-scheme;
+  padding-top: 152px;
+  padding-left: 99px;
 }
 
 .team .container {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr;
+	grid-template-columns: 573px 370px;
+	grid-template-rows: auto 1fr;
 	grid-template-areas: 
 		"heading ."
 		"content emphasis";
-	border: 1px solid blue;
+
+  column-gap: 119px;
+  padding-bottom: 580px;
+  position: relative;
 }
 
-.team .container > * {
-	border: 1px solid red;
+.team .container::after {
+  .pseudo-element;
+  background-image: url("../img/team-1.jpg");
+  width: 1165px;
+  height: 420px;
+  bottom: 120px;
+  left: 0;
 }
 
 .team__header {
@@ -21,9 +31,12 @@
 }
 
 .team__content-block {
-	grid-area: content;
+  grid-area: content;
 }
 
 .team__experience {
-	grid-area: emphasis;
+  grid-area: emphasis;
+  .small-text;
+  font-style: normal;
+  box-sizing: border-box;
 }
