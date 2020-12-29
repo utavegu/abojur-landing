@@ -1,5 +1,5 @@
 .about .container {
-	padding-top: 200px;
+	padding-top: 195px;
 	padding-left: 99px;
 	padding-right: 99px;
 
@@ -20,7 +20,16 @@
 // }
 
 .about__header {
-	grid-area: h;
+  grid-area: h;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.about__header::after {
+  .pseudo-element;
+  .ghost;
+  content: "About us";
+  
 }
 
 .about__content-block {
@@ -30,7 +39,7 @@
 
 .about__article-mentioning {
   grid-area: am;
-  padding-top: 160px;
+  padding-top: 200px;
   position: relative;
   .small-text;
 }
@@ -40,7 +49,7 @@
   background-image: url("../img/about-1.jpg");
   width: 276px;
   height: 160px;
-  top: 0;
+  top: 26px;
   left: 0;
 }
 
@@ -61,7 +70,7 @@
   width: 1166px;
   height: 304px;
   top: 0;
-  left: -101px;
+  left: -99px;
   z-index: -2;
 }
 
@@ -69,18 +78,22 @@
   .pseudo-element;
   background-color: rgba(52, 50, 53, 0.6);
   top: 0;
-  left: -102px;
+  left: -99px;
   width: 1166px;
   height: 304px;
   z-index: -1;
 }
 
 .about__content--4 {
-	grid-area: c4;
+  grid-area: c4;
+  width: 573px;
+  margin-bottom: 40px;
 }
 
 .about__content--5 {
-	grid-area: c5;
+  grid-area: c5;
+  width: 573px;
+  margin-top: 40px;
 }
 
 
@@ -96,6 +109,7 @@
 .about__sample-description {
   .small-text;
   align-self: end;
+  width: 258px;
   padding-left: 19px;
   border-left: 1px solid @light-brown-color;
 }
