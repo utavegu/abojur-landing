@@ -193,16 +193,41 @@
 
 		<section class="feedback">
       <div class="container">
-        <h2 class="visually-hidden">Форма обратной связи</h2>
-        <strong class="heading">Мы всегда рады общению</strong>
-        <p>Оставьте свои контакты. Менеджер перезвонит в удобное вам время и ответит на все вопросы.</p>
-        <form action="">
-          <input type="text">
-          <input type="text">
-          <input type="options">
-          <input type="checkbox">
-          <button class="button" type="submit">Оставить заявку</button>
-        </form>
+        <div class="feedback__text-block">
+          <h2 class="visually-hidden">Форма обратной связи</h2>
+          <strong class="feedback__heading heading">Мы всегда <br> рады общению</strong>
+          <p class="feedback__content">Оставьте свои контакты. Менеджер перезвонит в удобное вам время и ответит на все вопросы.</p>
+          <form action="">
+            <p>
+              <label for="your-name">Ваше имя</label>
+              <input class="feedback__text" id="your-name" name="your-name" type="text">
+            </p>
+            <p>
+              <label for="your-phone">Введите телефон</label>
+              <input class="feedback__text" id="your-phone" name="your-phone" type="text">
+            </p>
+            <div class="feedback__wrapper">
+              <select class="feedback__select">
+                <option disabled selected>Удобное время</option>
+                <option value="12">12:00</option>
+                <option value="13 Гена">13:00</option>
+                <option value="14">14:00</option>
+                <option value="15">15:00</option>
+                <option value="16">16:00</option>
+                <option value="17">17:00</option>
+              </select>
+              <p class="feedback__agree">
+                <label>
+                  <input class="feedback__checkbox visually-hidden" type="checkbox">
+                  <span class="feedback__custom-checkbox"></span>
+                  <span class="feedback__agreement">Согласие на обработку персональных данных</span>
+                </label>
+              </p>
+            </div>
+            <button class="feedback__button button" type="submit">Оставить заявку</button>
+          </form>
+        </div>
+        <img class="feedback__map" src="img/feedback-1.png" alt="Санкт Петербург, Лиговский проспект, 30А" width="474" height="734">
       </div>
 		</section>
 
