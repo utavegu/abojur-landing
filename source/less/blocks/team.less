@@ -1,19 +1,20 @@
 .team {
   .dark-scheme;
-  padding-top: 152px;
-  padding-left: 99px;
 }
 
 .team .container {
+  padding-top: 146px;
+  padding-left: 99px;
+  padding-bottom: 564px;
+
 	display: grid;
 	grid-template-columns: 573px 370px;
 	grid-template-rows: auto 1fr;
 	grid-template-areas: 
 		"heading ."
 		"content emphasis";
-
   column-gap: 119px;
-  padding-bottom: 580px;
+
   position: relative;
 }
 
@@ -27,11 +28,23 @@
 }
 
 .team__header {
-	grid-area: heading;
+  grid-area: heading;
+}
+
+.team__header::after {
+  .pseudo-element;
+  .ghost;
+  content: "Our team";
+  top: 155px;
+  left: 0;
+  color: #9a8584;
+  z-index: 0;
+  opacity: 0.1;
 }
 
 .team__content-block {
   grid-area: content;
+  margin-top: 20px;
 }
 
 .team__experience {
@@ -39,4 +52,5 @@
   .small-text;
   font-style: normal;
   box-sizing: border-box;
+  margin-top: 40px;
 }

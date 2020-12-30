@@ -16,6 +16,15 @@
   z-index: -1;
 }
 
+.feedback::after {
+  .pseudo-element;
+  background-image: url("../img/svg/map-placemark.svg");
+  top: 325px;
+  right: 590px;
+  width: 27px;
+  height: 38px;
+}
+
 .feedback label {
   font-size: 14px;
   line-height: 18px;
@@ -26,12 +35,30 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
+.feedback__heading {
+  position: relative;
+}
+
+.feedback__heading::after {
+  .pseudo-element;
+  .ghost;
+  content: "Talk";
+  top: 10px;
+  left: -100px;
+  color: #9a8584;
+  z-index: 0;
+  opacity: 0.1;
+}
+
 .feedback__text-block {
-  padding-top: 92px;
+  padding-top: 86px;
   padding-left: 99px;
 }
 
 .feedback__content {
+  margin-top: 38px;
+  margin-bottom: 40px;
+  width: 470px;
   opacity: 0.6;
 }
 
@@ -40,7 +67,7 @@
   background-color: transparent;
   border: none;
   border-bottom: 1px solid #a78587;
-  ;
+  color: #a78587;
 }
 
 .feedback__wrapper {
@@ -50,14 +77,20 @@
 }
 
 .feedback__select {
-  width: 160px;
+  width: 178px;
   height: 50px;
   border: 1px solid #a78587;
   padding: 10px;
-  background-color: @dark-background;
   color: #fff;
   font-size: 14px;
   line-height: 18px;
+  background: url("../img/svg/option-open.svg") no-repeat right;
+  -webkit-appearance: none;
+  background-position-x: 155px;
+}
+
+.feedback__select option {
+  color: #000;
 }
 
 .feedback__agree {
@@ -68,7 +101,7 @@
 
 .feedback__custom-checkbox {
   position: absolute;
-  left: -30px;
+  left: -40px;
   width: 27px;
   height: 27px;
   cursor: pointer;
@@ -84,6 +117,7 @@
 .feedback__button {
   background-color: transparent;
   width: 100%;
+  margin-top: 25px;
   border-left: none;
   border-right: none;
 }
