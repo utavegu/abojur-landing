@@ -1,14 +1,17 @@
-.solutions {
-  padding-top: 132px;
-  padding-left: 99px;
-}
-
 .solutions__heading {
-  width: 348px;
-  margin-bottom: 34px;
+  padding-left: 99px;
+  width: 450px;
+  margin-bottom: 39px;
+  position: relative;
 }
 
-
+.solutions__heading::after {
+  .pseudo-element;
+  .ghost;
+  content: "Projects";
+  top: 8px;
+  left: 0;
+}
 
 .slider {
   position: relative;
@@ -72,7 +75,7 @@
   border-radius: 50%;
   background-color: #343235;
   position: absolute;
-  top: 45%;
+  top: 44.5%;
   background-repeat: no-repeat;
   background-position: center;
 }

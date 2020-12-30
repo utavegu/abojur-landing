@@ -33,9 +33,27 @@
   z-index: 1;
 }
 
+.mission__heading  {
+  width: 350px;
+  margin-top: 7px;
+  margin-bottom: 31px;
+  position: relative;
+}
+
+.mission__heading::after {
+  .pseudo-element;
+  .ghost;
+  content: "Mission";
+  top: 9px;
+  left: -98px;
+  color: #9a8584;
+  z-index: 0;
+  opacity: 0.1;
+}
+
 .mission__text-content {
   order: 1;
-  padding-left: 119px;
+  padding-left: 109px;
   position: relative;
 }
 
@@ -49,6 +67,30 @@
   z-index: 1;
 }
 
+
+
+.mission__video-container {
+  position: relative;
+}
+
 .mission__video {
   z-index: 1;
+  position: relative;
+  display: block;
+}
+
+.mission__video-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  min-width: 97px;
+  min-height: 97px;
+  background-color: #343235;
+  border-radius: 50%;
+  z-index: 1;
+  background-image: url("../img/svg/play.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
