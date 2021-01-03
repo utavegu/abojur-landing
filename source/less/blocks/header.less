@@ -8,6 +8,8 @@
   display: grid;
   grid-template-columns: 1fr 174px 272px auto;
   column-gap: 45px;
+
+  position: relative;
 }
 
 .main-header__phone {
@@ -34,7 +36,6 @@
   font-style: normal;
   text-align: center;
   padding-left: 10px;
-  
 }
 
 .main-header__address::before {
@@ -55,4 +56,51 @@
   margin-top: 10px;
   border: none;
   background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.main-header__navigation {
+  position: absolute;
+  top: 74px;
+  right: 0;
+  background-color: @light-background;
+  z-index: 1;
+}
+
+.main-header__navigation.hidden {
+  display: none;
+}
+
+.main-header__navigation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-header__navigation-item {
+  min-width: 200px;
+
+  &:hover {
+    background-color: @ghost-color;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+
+  &:first-child {
+    border-top: none;
+  }
+
+  &:last-child {
+    border-bottom: none;
+    box-shadow: inset 0 -5px 10px -5px #555;
+  }
+}
+
+.main-header__navigation-link {
+  color: @dark-brown-color;
+  display: block;
+  padding: 5px;
 }

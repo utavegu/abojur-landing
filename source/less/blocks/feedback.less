@@ -62,6 +62,19 @@
   opacity: 0.6;
 }
 
+.feedback__text-wrapper {
+  position: relative;
+}
+
+.feedback__text-wrapper::after {
+  .pseudo-element;
+  background-image: url("../img/svg/slash.svg");
+  width: 6px;
+  height: 6px;
+  top: 50px;
+  right: -5px;
+}
+
 .feedback__text {
   width: 100%;
   background-color: transparent;

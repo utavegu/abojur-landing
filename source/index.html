@@ -30,13 +30,36 @@
 		<div class="container">
 			<h1 class="visually-hidden">Студия дизайнерского текстиля "Abojur"</h1>
       <img src="img/logo.png" alt="Abojur - студия дизайнерского текстиля в Санкт Петербурге" width="375" height="52">
-      <!-- Давай-ка лучше картинкой только Абажур будет, а текст пусть браузером рендерится, а то паливно -->
       <a class="main-header__phone" href="tel:+79818574624">+7 (981) 857-46-24 <span>заказать звонок</span></a>
-			<address class="main-header__address">Санкт Петербург, набережная реки Карповки, дом 5, литер П</address>
+      <address class="main-header__address">Санкт Петербург, набережная реки Карповки, дом 5, литер П</address>
+      <nav class="main-header__navigation hidden">
+        <ul class="main-header__navigation-list">
+          <li class="main-header__navigation-item">
+            <a class="main-header__navigation-link" href="#about">О компании</a>
+          </li>
+          <li class="main-header__navigation-item">
+            <a class="main-header__navigation-link" href="#production">Продукция</a>
+          </li>
+          <li class="main-header__navigation-item">
+            <a class="main-header__navigation-link" href="#solutions">Проекты</a>
+          </li>
+          <li class="main-header__navigation-item">
+            <a class="main-header__navigation-link" href="#mission">Миссия</a>
+          </li>
+          <li class="main-header__navigation-item">
+            <a class="main-header__navigation-link" href="#team">Наша команда</a>
+          </li>
+          <li class="main-header__navigation-item">
+            <a class="main-header__navigation-link" href="#advantages">Коллекции</a>
+          </li>
+          <li class="main-header__navigation-item">
+            <a class="main-header__navigation-link" href="#feedback">Обратная связь</a>
+          </li>
+        </ul>
+      </nav>
 			<button class="main-header__menu">
         <span class="visually-hidden">Меню</span>
       </button>
-			<!-- Сделай контентным меню... вроде в мастерских где-то было. Разворачивай по клику, а не по ховеру -->
 		</div>
 	</header>
 
@@ -51,7 +74,7 @@
 			</div>
 		</section>
 
-		<section class="about">
+		<section class="about" id="about">
 			<div class="container">
 				<h2 class="about__header heading">О компании</h2>
 				<div class="about__content-block">
@@ -70,7 +93,7 @@
 			</div>
 		</section>
 
-		<section class="production">
+		<section class="production" id="production">
 			<div class="container">
 				<h2 class="visually-hidden">Наша продукция</h2>
 				<strong class="production__header heading">Для вас только самое лучшее</strong>
@@ -130,7 +153,7 @@
 			</div>
 		</section>
 
-		<section class="solutions">
+		<section class="solutions" id="solutions">
       <!-- Именование классов тут ппц... переделай... БЭМ -->
 			<div class="container">
 				<h2 class="visually-hidden">Готовые решения</h2>
@@ -153,7 +176,7 @@
 			</div>
 		</section>
 
-		<section class="mission">
+		<section class="mission" id="mission">
 			<div class="container">
 				<div class="mission__text-content">
 					<h2 class="mission__heading heading">Наша миссия и видение</h2>
@@ -167,7 +190,7 @@
 			</div>
 		</section>
 
-		<section class="team">
+		<section class="team" id="team">
 			<div class="container">
 				<h2 class="team__header heading">Наша творческая команда</h2>
 				<div class="team__content-block">
@@ -178,7 +201,7 @@
 			</div>
 		</section>
 
-		<section class="advantages">
+		<section class="advantages" id="advantages">
       <div class="container">
         <h2 class="visually-hidden">Преимущества</h2>
         <strong class="advantages__heading heading">Метаморфозы</strong>
@@ -194,18 +217,18 @@
       </div>
 		</section>
 
-		<section class="feedback">
+		<section class="feedback" id="feedback">
       <div class="container">
         <div class="feedback__text-block">
           <h2 class="visually-hidden">Форма обратной связи</h2>
           <strong class="feedback__heading heading">Мы всегда <br> рады общению</strong>
           <p class="feedback__content">Оставьте свои контакты. Менеджер перезвонит в удобное вам время и ответит на все вопросы.</p>
           <form action="">
-            <p>
+            <p class="feedback__text-wrapper">
               <label for="your-name">Ваше имя</label>
               <input class="feedback__text" id="your-name" name="your-name" type="text">
             </p>
-            <p>
+            <p class="feedback__text-wrapper">
               <label for="your-phone">Введите телефон</label>
               <input class="feedback__text" id="your-phone" name="your-phone" type="text">
             </p>
@@ -234,6 +257,7 @@
       </div>
 		</section>
 
-	</main>
+  </main>
+  <script src="js/script.js" defer></script>
 </body>
 </html>
