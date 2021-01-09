@@ -1,0 +1,50 @@
+.modal {
+  position: fixed;
+  z-index: 90;
+  width: 800px;
+  height: 600px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.modal.is-opened {
+  display: block;
+}
+
+.modal-consultation {
+  color: white;
+  background-color: @light-brown-color;
+  border-radius: 51px;
+}
+
+.modal-consultation::before  {
+  content: "";
+  position: absolute;
+  background-image: url("../img/ornament-1.png");
+  background-size: cover;
+  image-rendering: pixelated;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.9;
+  border-radius: 50px;
+}
+
+.modal-consultation__inner-container {
+  padding: 10px;
+  color: @pastel-color;
+  text-align: center;
+}
+
+.modal-consultation__questionnaire {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 50px 50px 50px;
+  gap: 10px;
+}
+
+.modal-consultation__questionnaire label {
+  text-align: right;
+}

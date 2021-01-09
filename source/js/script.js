@@ -1,3 +1,7 @@
+/* ДАВАЙ-КА, ПОЖАЛУЙ, ДЛЯ КАЖДОГО СКРИПТА ОТДЕЛЬНЫЙ ФАЙЛ И ПОТОМ СОБИРАЙ КАК СТИЛИ ГАЛПОМ */
+
+
+
 /* Menu open-close script */
 
 const menuBurgerButton = document.querySelector(".main-header__menu");
@@ -48,4 +52,73 @@ anchor.addEventListener('click', go);
 
 
 
-/* *** script */
+/* Modal-consultation script */
+
+/* ВНИМАТЕЛЬНО ПЕРЕПРОВЕРЬ ВИСЯЩИЕ ОБРАБОТЧИКИ ЧЕРЕЗ ИВЕНТ... А лучше в ФФ, там понятнее */
+
+// Кнопка вызова модалки
+const askQuestionButton = document.querySelector(".promo__button");
+// Всё модальное окно
+const modalConsultation = document.querySelector(".modal-consultation");
+
+// Крестик закрытия модалки
+const modalConsultationCloseButton = modalConsultation.querySelector(".modal-consultation__close");
+// Кнопка отправки формы
+const modalConsultationSendButton = modalConsultation.querySelector(".modal-consultation__send");
+// Ловушки фокуса
+const modalConsultationTraps = modalConsultation.querySelectorAll(".focus-trap");
+
+
+// Функция закрытия модалки по нажатию клавиши Esc
+const onEscKeyDown = (evt) => {
+  if (evt.key === `Escape` || evt.key === `Esc`) {
+    modalConsultationClose();
+  }
+};
+
+// Функция закрытия модалки по клику по оверлэю
+const onOverlayClick = (evt) => {
+  if (evt.target.className === "overlay") {
+    modalConsultationClose();
+  };
+};
+
+// Функция открытия модального окна
+const modalConsultationOpen = () => {
+  document.body.classList.add("overlay");
+  modalConsultation.classList.add("is-opened");
+  modalConsultation.querySelector("textarea").focus();
+  document.addEventListener(`keydown`, onEscKeyDown);
+  document.querySelector(".overlay").addEventListener("click", onOverlayClick);
+}
+
+// Функция закрытия модального окна
+const modalConsultationClose = () => {
+  document.body.classList.remove("overlay");
+  modalConsultation.classList.remove("is-opened");
+  document.removeEventListener(`keydown`, onEscKeyDown);
+  document.body.removeEventListener("click", onOverlayClick);
+}
+
+// Слушаель открытия модалки по кнопке
+askQuestionButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  evt.stopPropagation() 
+  modalConsultationOpen();
+});
+
+// Слушаель закрытия модалки по крестику
+modalConsultationCloseButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  modalConsultationClose();
+});
+
+// Ловушки фокуса
+modalConsultationTraps.forEach(element => element.addEventListener("focus", () => {
+  if (element.classList.contains("focus-trap--upper")) {
+    modalConsultation.querySelector(".modal-consultation__close").focus();
+  } else {
+    modalConsultation.querySelector("textarea").focus();
+  }
+}));
+
