@@ -265,15 +265,15 @@
     <div class="modal-consultation__inner-container">
       <p>Задайте вопрос и наш дизайнер проконсультирует вас в ближайшее время</p>
       <span class="focus-trap focus-trap--upper" tabindex="0" aria-hidden="true"></span>
-      <form action="">
-        <textarea name="" id="" cols="63" rows="10" autofocus></textarea>
+      <form action="https://formspree.io/your@email.com" method="POST">
+        <textarea name="textarea" autofocus></textarea>
         <div class="modal-consultation__questionnaire">
-          <label for="">Как к вам обращаться?</label>
-          <input type="text">
-          <label for="">Ваша почта*</label>
-          <input type="text" required>
-          <label for="">Ваш телефон</label>
-          <input type="text">
+          <label for="first-name">Как к вам обращаться?</label>
+          <input type="text" id="first-name" name="first-name">
+          <label for="mail">Ваша почта*</label>
+          <input type="text" id="mail" name="mail" required>
+          <label for="phone">Ваш телефон</label>
+          <input type="text" id="phone" name="phone" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$">
         </div>
         <button class="modal-consultation__send button" type="submit">Отправить</button>
       </form>
