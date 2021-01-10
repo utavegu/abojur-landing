@@ -263,10 +263,10 @@
 
   <div class="modal modal-consultation">
     <div class="modal-consultation__inner-container">
-      <p>Задайте вопрос и наш менеджер проконсультирует вас в ближайшее время</p>
+      <p>Задайте вопрос и наш дизайнер проконсультирует вас в ближайшее время</p>
       <span class="focus-trap focus-trap--upper" tabindex="0" aria-hidden="true"></span>
       <form action="">
-        <textarea name="" id="" cols="30" rows="10" autofocus></textarea>
+        <textarea name="" id="" cols="63" rows="10" autofocus></textarea>
         <div class="modal-consultation__questionnaire">
           <label for="">Как к вам обращаться?</label>
           <input type="text">
@@ -275,18 +275,14 @@
           <label for="">Ваш телефон</label>
           <input type="text">
         </div>
-        <button class="modal-consultation__send" type="submit">Отправить</button>
+        <button class="modal-consultation__send button" type="submit">Отправить</button>
       </form>
-      <button class="modal-consultation__close" type="button">
-        <!-- СВГ В СТИЛИ (полуинлайн), А ТУТ ДОБАВЬ ВИЖУАЛЛИ ХИДДЕН СПАН -->
-        <svg width="21" height="21">
-          <line x1="0" y1="0" x2="21" y2="21" stroke="#ee3643" stroke-width="4" />
-          <line x1="0" y1="21" x2="21" y2="00" stroke="#ee3643" stroke-width="4" />
-        </svg>
-      </button>
+      <button class="modal-consultation__close button" type="button">Отмена</button>
       <span class="focus-trap focus-trap--lower" tabindex="0" aria-hidden="true"></span>
     </div>
   </div>
+
+  <!-- Формы потом не забудь правильно настроить - адрес отправки, лэйблы... -->
 
   <script src="js/script.js" defer></script>
 </body>

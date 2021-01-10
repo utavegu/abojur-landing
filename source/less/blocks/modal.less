@@ -13,11 +13,6 @@
   display: block;
 }
 
-.modal-consultation {
-  color: white;
-  background-color: @light-brown-color;
-  border-radius: 51px;
-}
 
 .modal-consultation::before  {
   content: "";
@@ -28,14 +23,30 @@
   width: 100%;
   height: 100%;
   z-index: -1;
-  opacity: 0.9;
   border-radius: 50px;
 }
 
 .modal-consultation__inner-container {
   padding: 10px;
-  color: @pastel-color;
   text-align: center;
+  .dark-scheme;
+  background-color: rgba(52, 50, 53, 0.9);
+  height: 100%;
+  border-radius: 50px;
+}
+
+.modal-consultation textarea {
+  resize: none;
+  background-color: transparent;
+  border: 1px solid #a78587;
+  color: #a78587;
+}
+
+.modal-consultation input {
+  border: none;
+  border-bottom: 1px solid #a78587;
+  background-color: transparent;
+  color: #a78587;
 }
 
 .modal-consultation__questionnaire {
@@ -43,8 +54,27 @@
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 50px 50px 50px;
   gap: 10px;
+  align-items: center;
 }
 
 .modal-consultation__questionnaire label {
   text-align: right;
+}
+
+.modal-consultation button {
+  background-color: transparent;
+  border-left: none;
+  border-right: none;
+}
+
+.modal-consultation__send {
+  margin-top: 50px;
+  margin-left: 100px;
+  float: left;
+}
+
+.modal-consultation__close {
+  margin-top: 50px;
+  margin-right: 100px;
+  float: right;
 }
