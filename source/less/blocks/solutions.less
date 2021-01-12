@@ -29,27 +29,26 @@
   list-style: none;
   margin: 0;
   padding: 0;
-
   height: 600px;
-  width: 9999px;
+  width: 2880px;
   font-size: 0;
-  transition: margin-left 250ms;
+  transition: margin-left 500ms;
 }
 
 .solutions__slider-item {
   display: inline-block;
-  // .flex-container;
-  // justify-content: center;
+  position: relative;
 }
 
 .solutions__slider-overlay {
+  position: absolute;
   .dark-scheme;
   .flex-container;
   justify-content: space-between;
   align-items: center;
   width: 960px;
   height: 100px;
-  margin-top: -100px;
+  margin-top: -115px;
   padding-left: 36px;
   padding-right: 36px;
   background-color: rgba(52, 50, 53, 0.9);
@@ -82,6 +81,18 @@
 
 .solutions__slider-button:hover::after {
   right: -7px;
+}
+
+.solutions__slider-radio-group {
+  position: absolute;
+  top: 10px;
+  left: center;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.solutions__slider-radio-group input {
+  cursor: pointer;
 }
 
 .solutions__slider-btn {

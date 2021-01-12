@@ -126,28 +126,53 @@ modalConsultationTraps.forEach(element => element.addEventListener("focus", () =
 
 /* SLIDER SCRIPT */
 
-const carousel = document.querySelector(".solutions__slider");
+/*
+2) Автокарусель
+3) Если слайд последний или первый - соответствующая кнопка дизэйблед (и стили для нее пропиши)
+*/
 
-let width = 960; // ширина картинки
-let count = 1; // видимое количество изображений
+const carousel = document.querySelector('.solutions__slider'); // сам модуль слайдера
+const tape = carousel.querySelector('.solutions__slider-list'); // лента
+const slides = carousel.querySelectorAll('.solutions__slider-item'); // слайды
+const arrowLeft = carousel.querySelector('.solutions__slider-btn--prev'); // кнопка влево
+const arrowRight = carousel.querySelector('.solutions__slider-btn--next'); // кнопка вправо
+const sliderSwitcher = document.querySelectorAll(".solutions__slider-radio-group input"); // радиокнопки
 
-let list = carousel.querySelector('ul');
-let listElems = carousel.querySelectorAll('li');
-
+const slideWidth = 960; // ширина слайда
 let position = 0; // положение ленты прокрутки
 
-carousel.querySelector('.solutions__slider-btn--prev').onclick = function() {
-  // сдвиг влево
-  position += width * count;
-  // последнее передвижение влево может быть не на 3, а на 2 или 1 элемент
-  position = Math.min(position, 0)
-  list.style.marginLeft = position + 'px';
+// сдвиг вправо
+arrowRight.onclick = function() {
+  position -= slideWidth;
+  position = Math.max(position, -slideWidth * (slides.length - 1));
+  tape.style.marginLeft = position + 'px';
+  sliderSwitcher.forEach((element) => {
+    element.checked="false";
+    sliderSwitcher[Math.abs(position/slideWidth)].checked="true";
+  })
 };
 
-carousel.querySelector('.solutions__slider-btn--next').onclick = function() {
-  // сдвиг вправо
-  position -= width * count;
-  // последнее передвижение вправо может быть не на 3, а на 2 или 1 элемент
-  position = Math.max(position, -width * (listElems.length - count));
-  list.style.marginLeft = position + 'px';
+// сдвиг влево
+arrowLeft.onclick = function() {
+  position += slideWidth;
+  position = Math.min(position, 0);
+  tape.style.marginLeft = position + 'px';
+  sliderSwitcher.forEach((element) => {
+    element.checked="false";
+    sliderSwitcher[Math.abs(position/slideWidth)].checked="true";
+  })
 };
+
+// Свитчер
+sliderSwitcher.forEach((element, id) => element.addEventListener("click", () => {
+  position = -(slideWidth*id);
+  tape.style.marginLeft = position + 'px';
+}));
+
+
+
+
+
+
+// console.log(Number(tape.style.marginLeft.match(/([0-9]+)/g))/slideWidth);
+// Ну и третья задача, АВТОПРОКРУТКА, просто по сет таймауту подставляет в эту же формулу 0, 1, 2, 0, 1, 2...
