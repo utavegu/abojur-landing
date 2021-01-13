@@ -126,53 +126,50 @@ modalConsultationTraps.forEach(element => element.addEventListener("focus", () =
 
 /* SLIDER SCRIPT */
 
-/*
-2) Автокарусель
-3) Если слайд последний или первый - соответствующая кнопка дизэйблед (и стили для нее пропиши)
-*/
+const carousel = document.querySelector('.solutions__slider');
+const tape = carousel.querySelector('.solutions__slider-list');
+const slides = carousel.querySelectorAll('.solutions__slider-item');
+const arrowLeft = carousel.querySelector('.solutions__slider-btn--prev');
+const arrowRight = carousel.querySelector('.solutions__slider-btn--next');
+const sliderSwitcher = document.querySelectorAll(".solutions__slider-radio-group input");
+const slideWidth = 960;
+let position = 0;
+const startPosition = 0;
+const endPosition = -slideWidth * (slides.length - 1);
 
-const carousel = document.querySelector('.solutions__slider'); // сам модуль слайдера
-const tape = carousel.querySelector('.solutions__slider-list'); // лента
-const slides = carousel.querySelectorAll('.solutions__slider-item'); // слайды
-const arrowLeft = carousel.querySelector('.solutions__slider-btn--prev'); // кнопка влево
-const arrowRight = carousel.querySelector('.solutions__slider-btn--next'); // кнопка вправо
-const sliderSwitcher = document.querySelectorAll(".solutions__slider-radio-group input"); // радиокнопки
-
-const slideWidth = 960; // ширина слайда
-let position = 0; // положение ленты прокрутки
-
-// сдвиг вправо
-arrowRight.onclick = function() {
-  position -= slideWidth;
-  position = Math.max(position, -slideWidth * (slides.length - 1));
-  tape.style.marginLeft = position + 'px';
-  sliderSwitcher.forEach((element) => {
-    element.checked="false";
-    sliderSwitcher[Math.abs(position/slideWidth)].checked="true";
-  })
-};
-
-// сдвиг влево
-arrowLeft.onclick = function() {
-  position += slideWidth;
-  position = Math.min(position, 0);
-  tape.style.marginLeft = position + 'px';
-  sliderSwitcher.forEach((element) => {
-    element.checked="false";
-    sliderSwitcher[Math.abs(position/slideWidth)].checked="true";
-  })
-};
-
-// Свитчер
 sliderSwitcher.forEach((element, id) => element.addEventListener("click", () => {
   position = -(slideWidth*id);
   tape.style.marginLeft = position + 'px';
 }));
 
+const setSwitcherIndicator = () => {
+  sliderSwitcher.forEach((element) => {
+    element.checked="false";
+    sliderSwitcher[Math.abs(position/slideWidth)].checked="true";
+  })
+}
 
+const shiftRight = () => {
+  position -= slideWidth;
+  if (position < endPosition) {
+    position = 0;
+  }
+  position = Math.max(position, endPosition);
+  tape.style.marginLeft = position + 'px';
+  setSwitcherIndicator();
+}
 
+const shiftLeft = () => {
+  position += slideWidth;
+  if (position > startPosition) {
+    position = endPosition;
+  }
+  position = Math.min(position, startPosition);
+  tape.style.marginLeft = position + 'px';
+  setSwitcherIndicator();
+}
 
+arrowRight.onclick = shiftRight;
+arrowLeft.onclick = shiftLeft;
 
-
-// console.log(Number(tape.style.marginLeft.match(/([0-9]+)/g))/slideWidth);
-// Ну и третья задача, АВТОПРОКРУТКА, просто по сет таймауту подставляет в эту же формулу 0, 1, 2, 0, 1, 2...
+setInterval(shiftRight, 5000);
