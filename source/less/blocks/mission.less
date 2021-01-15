@@ -67,28 +67,147 @@
   z-index: 1;
 }
 
+
+
 .mission__video-container {
-  position: relative;
+  z-index: 10;
+  margin: 0;
+  padding: 0;
+  // position: relative;
 }
 
-.mission__video {
-  z-index: 1;
-  position: relative;
+// .mission__video-container:hover::after .video-module__display {
+//   .pseudo-element;
+//   background-image: url("../img/svg/play.svg");
+//   background-color: black;
+//   top: 45%;
+//   left: 50%;
+//   margin-right: -50%;
+//   transform: translate(-45%, -50%);
+//   width: 97px;
+//   height: 97px;
+//   background-color: #343235;
+//   border-radius: 50%;
+//   z-index: 110;
+//   opacity: 0.5;
+// }
+
+.video-module__display {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto; 
+}
+
+
+
+
+.v-controls {
+  background-color: @dark-background;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+
+  display: none;
+
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 50px);
+}
+
+// .v-controls li:not(.v-controls__timeline) {
+//   width: 30px;
+//   height: 30px;
+//   border: 1px solid red;
+//   margin: auto;
+// }
+
+.v-controls__timeline {
+  grid-column-start: 1;
+  grid-column-end: 7;
+
+  display: flex;
+  align-self: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.v-controls__timeline-full {
+  width: 100%;
+  background-color: @pastel-color;
+  cursor: pointer;
+  color: #fff;
+}
+
+.v-controls__timeline-full::-moz-progress-bar {
+  background-color: #fff;
+}
+
+.v-controls__timeline-full::-webkit-progress-value {
+  background-color: #fff;
+}
+
+// .v-controls progress::-moz-progress-bar {
+// 	background-color: red;
+// }
+// /* Chrome requires its own rule for this, otherwise it ignores it */
+// .v-controls progress::-webkit-progress-value {
+// 	background-color:red;
+// }
+
+.v-controls__timeline-filled {
+  background-color: yellow;
   display: block;
 }
 
-.mission__video-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  min-width: 97px;
-  min-height: 97px;
-  background-color: #343235;
-  border-radius: 50%;
-  z-index: 1;
-  background-image: url("../img/svg/play.svg");
-  background-repeat: no-repeat;
-  background-position: center;
+
+
+/* fullscreen */
+html:-ms-fullscreen {
+	width: 100%;
+}
+
+:-webkit-full-screen {
+	background-color: transparent;
+}
+
+/* hide controls on fullscreen with WebKit */
+figure[data-fullscreen=true] video::-webkit-media-controls {
+	display: none !important;
+}
+
+figure[data-fullscreen=true] {
+	max-width: 100%;
+	width: 100%;
+	margin: 0;
+  padding: 0;
+}
+
+figure[data-fullscreen=true] video {
+	height: auto;
+}
+
+// figure[data-fullscreen=true] figcaption {
+// 	display: none;
+// }
+
+figure[data-fullscreen=true] .v-controls {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	z-index: 100;
+}
+
+figure[data-fullscreen=true] .v-controls li {
+	// width:5%;
+}
+
+figure[data-fullscreen=true] .v-controls .progress {
+	// width: 100%;
 }

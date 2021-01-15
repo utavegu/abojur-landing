@@ -75,7 +75,19 @@
   margin-top: 50px;
   margin-left: 100px;
   float: left;
+  position: relative;
 }
+
+.modal-consultation__send:hover::after {
+  content: attr(data-description);
+  width: 400px;
+  background: #ffe;
+  padding: 5px;
+  border: 1px solid #666;
+  border-radius: 5px;
+  position: absolute;
+  top: 20px;
+ }
 
 .modal-consultation__close {
   margin-top: 50px;

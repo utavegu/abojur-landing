@@ -1,3 +1,5 @@
+'use strict';
+
 /* ДАВАЙ-КА, ПОЖАЛУЙ, ДЛЯ КАЖДОГО СКРИПТА ОТДЕЛЬНЫЙ ФАЙЛ И ПОТОМ СОБИРАЙ КАК СТИЛИ ГАЛПОМ */
 
 
@@ -126,6 +128,8 @@ modalConsultationTraps.forEach(element => element.addEventListener("focus", () =
 
 /* SLIDER SCRIPT */
 
+/* ОТРЕФАКТОРИ-КА, ПОЖАЛУЙ, НАЗВАНИЕ МОДУЛЯ СЛАЙДЕРА */
+
 const carousel = document.querySelector('.solutions__slider');
 const tape = carousel.querySelector('.solutions__slider-list');
 const slides = carousel.querySelectorAll('.solutions__slider-item');
@@ -172,4 +176,159 @@ const shiftLeft = () => {
 arrowRight.onclick = shiftRight;
 arrowLeft.onclick = shiftLeft;
 
-setInterval(shiftRight, 5000);
+// setInterval(shiftRight, 5000);
+
+
+
+/* VIDEO SCRIPT */
+/* ТУТ ПОДУМАЙ ХОРОШО, ГДЕ НЕЛЬЗЯ ЕС6+ ИСПОЛЬЗОВАТЬ */
+var supportsVideo = !!document.createElement('video').canPlayType;
+
+if (supportsVideo) {
+
+  const videoContainer = document.querySelector('.video-module');
+  const video = videoContainer.querySelector('.video-module__display');
+  const videoControls = videoContainer.querySelector('.video-module__controls');
+
+  video.controls = false;
+  videoControls.style.display = 'grid';
+
+
+  /* Timeline */
+  const progress = videoControls.querySelector('.v-controls__timeline-full');
+  const progressBar = videoControls.querySelector('.v-controls__timeline-filled');
+
+  // Занесли в элемент прогресс данные о длине видео
+  video.addEventListener('loadedmetadata', () => {
+    progress.setAttribute('max', video.duration);
+  });
+
+  // Если позиция таймлайна поменялась, то...
+  video.addEventListener('timeupdate', function() {
+    if (!progress.getAttribute('max')) progress.setAttribute('max', video.duration); // Для мобильных браузеров
+    progress.value = video.currentTime; // ...меняем текущее значение прогресса...
+    progressBar.style.width = Math.floor((video.currentTime / video.duration) * 100) + '%'; // ...и перерисовываем шкалу заполненности
+  });
+
+  // Реакция на клик пользователя в по таймлайну
+  progress.addEventListener('click', function(evt) {
+    video.currentTime = (evt.offsetX / this.offsetWidth) * video.duration;
+  });
+
+
+  /* Play / Pause */
+  const playPauseFunction = () => {
+    if (video.paused || video.ended) video.play();
+    else video.pause();
+  }
+  const playpause = videoControls.querySelector('.v-controls__play-pause');
+  playpause.addEventListener('click', playPauseFunction);
+  video.addEventListener('click', playPauseFunction);
+
+  /* Stop */
+  const stop = videoControls.querySelector('.v-controls__stop');
+  stop.addEventListener('click', () => {
+    video.pause();
+    video.currentTime = 0;
+    progress.value = 0;
+  });
+
+
+  /* Sound */
+  const mute = videoControls.querySelector('.v-controls__mute');
+  const volinc = videoControls.querySelector('.v-controls__sound-up');
+  const voldec = videoControls.querySelector('.v-controls__sound-down');
+
+  var alterVolume = (dir) => {
+    var currentVolume = Math.floor(video.volume * 10) / 10;
+    if (dir === '+') {
+      if (currentVolume < 1) video.volume += 0.1;
+    }
+    else if (dir === '-') {
+     if (currentVolume > 0) video.volume -= 0.1;
+    }
+  }
+
+  mute.addEventListener('click', () => {
+    video.muted = !video.muted;
+  });
+
+  // Ага... когда сначала мышью тычешь в дефолтный контроль звука, значение становится не точным и как итог переваливает за единицу (или не может стать нулевым). В принципе, учитывая, что одновременно не может быть кастомного управления звуком или встроенного - можешь на эту ошибку забить, она вероятна только при отладке
+
+  volinc.addEventListener('click', () => {
+    alterVolume('+');
+    // console.log(video.volume);
+  });
+
+  voldec.addEventListener('click', () => {
+    alterVolume('-');
+    // console.log(video.volume);
+  });
+
+
+  /* Fullscreen */
+  let fullscreen = videoControls.querySelector('.v-controls__fullscreen');
+
+  // Проверка, поддерживает ли браузер Fullscreen API
+  var fullScreenEnabled = !!(document.fullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled || document.webkitSupportsFullscreen || document.webkitFullscreenEnabled || document.createElement('video').webkitRequestFullScreen);
+  // Если не поддерживает - прячем кнопку
+  if (!fullScreenEnabled) { // 
+    fullscreen.style.display = 'none';
+  }
+
+  // Функция установки видеоконтейнеру атрибута полноэкранности
+  var setFullscreenData = function(state) {
+    videoContainer.setAttribute('data-fullscreen', !!state);
+  }
+
+  
+  // Функция проверки, находится ли документ в полноэкранном режиме
+   var isFullScreen = function() {
+     return !!(document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
+   }
+
+   
+   
+
+  // Функция-обработчик, свитчер фулскрина
+  var handleFullscreen = function() {
+    // Если режим фулскрина активен...
+    if (isFullScreen()) {
+      // ... то выйти из режима фуллскрин
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+      else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+      else if (document.msExitFullscreen) document.msExitFullscreen();
+      setFullscreenData(false);
+    }
+    else {
+      // ...иначе войти в полноэкранный режим
+      if (videoContainer.requestFullscreen) videoContainer.requestFullscreen();
+      else if (videoContainer.mozRequestFullScreen) videoContainer.mozRequestFullScreen();
+      else if (videoContainer.webkitRequestFullScreen) video.webkitRequestFullScreen();
+      else if (videoContainer.msRequestFullscreen) videoContainer.msRequestFullscreen();
+      setFullscreenData(true);
+    }
+  }
+
+  // Слушатель кнопки фулскрина
+  fullscreen.addEventListener('click', function() {
+    handleFullscreen();
+  });
+
+  // Слушатели событий изменения полноэкранного режима из других элементов управления
+  document.addEventListener('fullscreenchange', function(e) {
+    setFullscreenData(!!(document.fullScreen || document.fullscreenElement));
+  });
+  document.addEventListener('webkitfullscreenchange', function() {
+    setFullscreenData(!!document.webkitIsFullScreen);
+  });
+  document.addEventListener('mozfullscreenchange', function() {
+    setFullscreenData(!!document.mozFullScreen);
+  });
+  document.addEventListener('msfullscreenchange', function() {
+    setFullscreenData(!!document.msFullscreenElement);
+  });
+
+
+}
