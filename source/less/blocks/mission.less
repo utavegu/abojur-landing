@@ -1,3 +1,5 @@
+// ВЫНЕСИ ВИДЕО-МОДУЛЬ В ОТДЕЛЬНЫЙ ФАЙЛ
+
 .mission {
   .dark-scheme;
   padding-top: 120px;
@@ -106,7 +108,6 @@
 .v-controls {
   background-color: @dark-background;
 
-  list-style: none;
   margin: 0;
   padding: 0;
 
@@ -114,20 +115,28 @@
 
   display: none;
 
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(2, 50px);
+  grid-template-columns: repeat(9, auto);
+  grid-template-rows: repeat(2, 40px);
+  align-items: center;
 }
 
-// .v-controls li:not(.v-controls__timeline) {
-//   width: 30px;
-//   height: 30px;
-//   border: 1px solid red;
-//   margin: auto;
-// }
+.v-controls button {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  background-color: inherit;
+  background-repeat: no-repeat;
+  background-position: center;
+  outline: none; // Позже - внутренний, тень-свечение
+
+  border: 1px solid red;
+}
+
+// .v-controls li:not(.v-controls__timeline) {}
 
 .v-controls__timeline {
   grid-column-start: 1;
-  grid-column-end: 7;
+  grid-column-end: 9;
 
   display: flex;
   align-self: center;
@@ -136,11 +145,13 @@
   padding: 0;
   margin: 0 auto;
   width: 95%;
+
+  border: 1px solid green;
 }
 
 .v-controls__timeline-full {
   width: 100%;
-  background-color: @pastel-color;
+  background-color: #808080;
   cursor: pointer;
   color: #fff;
 }
@@ -161,10 +172,174 @@
 // 	background-color:red;
 // }
 
-.v-controls__timeline-filled {
-  background-color: yellow;
-  display: block;
+.v-controls__fullscreen {
+  background-image: url("../img/svg/player/fullscreen-white-18dp.svg");
+  margin-left: 9px;
+  margin-right: 20px;
 }
+
+.v-controls__play-pause {
+  background-image: url("../img/svg/player/play_arrow-white-18dp.svg");
+}
+
+.v-controls__stop {
+  background-image: url("../img/svg/player/stop-white-18dp.svg");
+}
+
+.v-controls__rewind-left {
+  background-image: url("../img/svg/player/fast_rewind-white-18dp.svg");
+}
+
+.v-controls__rewind-right {
+  background-image: url("../img/svg/player/fast_forward-white-18dp.svg");
+  margin-right: 20px;
+}
+
+.v-controls__sound-down {
+  background-image: url("../img/svg/player/volume_down-white-18dp.svg");
+}
+
+.v-controls__sound-up {
+  background-image: url("../img/svg/player/volume_up-white-18dp.svg");
+}
+
+.v-controls__mute {
+  background-image: url("../img/svg/player/volume_off-white-18dp.svg");
+}
+
+
+
+
+
+/* РЭНДЖ ЗВУКА */
+
+.v-controls__sound-indicator {
+  -webkit-appearance: none;
+  background: transparent;
+
+  width: 100px;
+  height: 20px;
+
+  border: 1px solid blue;
+}
+
+
+.v-controls__sound-indicator:focus {
+  outline: none;
+  // background: #808080;
+}
+
+// Фокус в Хромиуме
+.v-controls__sound-indicator:focus::-webkit-slider-runnable-track {
+  // background: #808080;
+}
+
+.v-controls__sound-indicator:focus::-moz-range-track {
+  outline: none;
+}
+
+
+// Бегунок в Хромиуме
+.v-controls__sound-indicator::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #fff;
+  cursor: ew-resize;
+  margin-top: -14px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+// Бегунок в Файрфоксе
+.v-controls__sound-indicator::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #fff;
+  cursor: ew-resize;
+}
+
+// Бегунок в IE
+.v-controls__sound-indicator::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #fff;
+  cursor: ew-resize;
+}
+
+
+// Дорожка в Хромиуме
+.v-controls__sound-indicator::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #808080;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+// Дорожка в Файрфоксе
+.v-controls__sound-indicator::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #808080;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+// Дорожка в IE
+.v-controls__sound-indicator::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+
+// Дорожка в ИЕ до и после ползунка
+.v-controls__sound-indicator::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+.v-controls__sound-indicator:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+
+.v-controls__sound-indicator::-ms-fill-upper {
+  background: #3071a9;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+.v-controls__sound-indicator:focus::-ms-fill-upper {
+  background: #367ebd;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

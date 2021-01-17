@@ -217,11 +217,22 @@ if (supportsVideo) {
 
 
   /* Play / Pause */
-  const playPauseFunction = () => {
-    if (video.paused || video.ended) video.play();
-    else video.pause();
-  }
+
+  /* А ВОТ МНЕ ТОЧНО НУЖНО ЗАВОДИТЬ ПЕРЕМЕННЫЕ ДЛЯ ТАКИХ ПРОСТЫХ ОПЕРАЦИЙ? Убери, если упоминается только 1 раз */
+
   const playpause = videoControls.querySelector('.v-controls__play-pause');
+
+  const playPauseFunction = () => {
+    if (video.paused || video.ended) {
+      video.play();
+      playpause.style = 'background-image: url("../img/svg/player/pause-white-18dp.svg")';
+    }
+    else {
+      video.pause();
+      playpause.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
+    }
+  }
+  
   playpause.addEventListener('click', playPauseFunction);
   video.addEventListener('click', playPauseFunction);
 
@@ -233,37 +244,59 @@ if (supportsVideo) {
     progress.value = 0;
   });
 
+  /* Перемотки */
+  const rewindRight = videoControls.querySelector('.v-controls__rewind-right');
+  rewindRight.addEventListener('click', () => {
+    video.currentTime += 5;
+    console.log(video.currentTime);
+  });
+
+  const rewindLeft = videoControls.querySelector('.v-controls__rewind-left');
+  rewindLeft.addEventListener('click', () => {
+    video.currentTime -= 5;
+    console.log(video.currentTime);
+  });
+
 
   /* Sound */
   const mute = videoControls.querySelector('.v-controls__mute');
   const volinc = videoControls.querySelector('.v-controls__sound-up');
   const voldec = videoControls.querySelector('.v-controls__sound-down');
+  const soundIndicator = videoControls.querySelector('.v-controls__sound-indicator');
 
   var alterVolume = (dir) => {
     var currentVolume = Math.floor(video.volume * 10) / 10;
     if (dir === '+') {
-      if (currentVolume < 1) video.volume += 0.1;
+      if (currentVolume < 1) {
+        video.volume = (video.volume + 0.1).toFixed(1);
+        soundIndicator.value = Number(soundIndicator.value) + 0.1;
+      }
     }
     else if (dir === '-') {
-     if (currentVolume > 0) video.volume -= 0.1;
+      if (currentVolume > 0) {
+        video.volume = (video.volume - 0.1).toFixed(1);
+        soundIndicator.value = Number(soundIndicator.value) - 0.1;
+      }
     }
   }
 
   mute.addEventListener('click', () => {
     video.muted = !video.muted;
+    if (video.muted) mute.style = 'background-image: url("../img/svg/player/volume_mute-white-18dp.svg")';
+    else mute.style = 'background-image: url("../img/svg/player/volume_off-white-18dp.svg")';
   });
-
-  // Ага... когда сначала мышью тычешь в дефолтный контроль звука, значение становится не точным и как итог переваливает за единицу (или не может стать нулевым). В принципе, учитывая, что одновременно не может быть кастомного управления звуком или встроенного - можешь на эту ошибку забить, она вероятна только при отладке
 
   volinc.addEventListener('click', () => {
     alterVolume('+');
-    // console.log(video.volume);
   });
 
   voldec.addEventListener('click', () => {
     alterVolume('-');
-    // console.log(video.volume);
   });
+
+	soundIndicator.addEventListener("input", function() {
+    video.volume = soundIndicator.value;
+	});
 
 
   /* Fullscreen */
@@ -287,9 +320,6 @@ if (supportsVideo) {
      return !!(document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
    }
 
-   
-   
-
   // Функция-обработчик, свитчер фулскрина
   var handleFullscreen = function() {
     // Если режим фулскрина активен...
@@ -300,6 +330,7 @@ if (supportsVideo) {
       else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
       else if (document.msExitFullscreen) document.msExitFullscreen();
       setFullscreenData(false);
+      fullscreen.style = 'background-image: url("../img/svg/player/fullscreen-white-18dp.svg")';
     }
     else {
       // ...иначе войти в полноэкранный режим
@@ -308,6 +339,7 @@ if (supportsVideo) {
       else if (videoContainer.webkitRequestFullScreen) video.webkitRequestFullScreen();
       else if (videoContainer.msRequestFullscreen) videoContainer.msRequestFullscreen();
       setFullscreenData(true);
+      fullscreen.style = 'background-image: url("../img/svg/player/fullscreen_exit-white-18dp.svg")';
     }
   }
 
