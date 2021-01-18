@@ -223,6 +223,9 @@ if (supportsVideo) {
     fullTimeline.value = videoDisplay.currentTime; // ...меняем текущее значение прогресса...
     filledTimeline.style.width = Math.floor((videoDisplay.currentTime / videoDisplay.duration) * 100) + '%'; // ...и перерисовываем шкалу заполненности
     currentTimeIndicator.textContent = getTime(videoDisplay.currentTime);
+    if (videoDisplay.ended) {
+      playPauseButton.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
+    }
   });
 
   // Реакция на клик пользователя в по таймлайну
@@ -250,10 +253,12 @@ if (supportsVideo) {
     videoDisplay.pause();
     videoDisplay.currentTime = 0;
     fullTimeline.value = 0;
+    playPauseButton.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
   });
 
   videoControls.querySelector('.v-controls__rewind-right').addEventListener('click', () => videoDisplay.currentTime += 5);
   videoControls.querySelector('.v-controls__rewind-left').addEventListener('click', () => videoDisplay.currentTime -= 5);
+
 
 
   /* Блок управления звуком */
@@ -276,10 +281,29 @@ if (supportsVideo) {
     }
   }
 
+  soundIndicator.addEventListener("input", () => {
+    videoDisplay.volume = soundIndicator.value;
+    
+  });
+  
+  soundIndicator.addEventListener("change", () => {
+    if (soundIndicator.value == 0) muteButton.setAttribute("disabled", "disabled");
+    else muteButton.removeAttribute("disabled");
+  });
+
   muteButton.addEventListener('click', () => {
     videoDisplay.muted = !videoDisplay.muted;
-    if (videoDisplay.muted) muteButton.style = 'background-image: url("../img/svg/player/volume_off-white-18dp.svg")';
-    else muteButton.style = 'background-image: url("../img/svg/player/volume_mute-white-18dp.svg")';
+    let previousSoundLevel = videoDisplay.volume;
+    if (videoDisplay.muted) {
+      muteButton.style = 'background-image: url("../img/svg/player/volume_off-white-18dp.svg")';
+      soundIndicator.value = 0;
+      soundIndicator.setAttribute("disabled", "disabled");
+    }
+    else {
+      muteButton.style = 'background-image: url("../img/svg/player/volume_mute-white-18dp.svg")';
+      soundIndicator.value = previousSoundLevel;
+      soundIndicator.removeAttribute("disabled");
+    }   
   });
 
   videoControls.querySelector('.v-controls__sound-up').addEventListener('click', () => {
@@ -290,9 +314,6 @@ if (supportsVideo) {
     changeVolume('-');
   });
 
-	soundIndicator.addEventListener("input", () => {
-    videoDisplay.volume = soundIndicator.value;
-	});
 
 
   /* Блок управления полноэкранным режимом */
