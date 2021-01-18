@@ -181,147 +181,143 @@ arrowLeft.onclick = shiftLeft;
 
 
 /* VIDEO SCRIPT */
-/* ТУТ ПОДУМАЙ ХОРОШО, ГДЕ НЕЛЬЗЯ ЕС6+ ИСПОЛЬЗОВАТЬ */
+
 var supportsVideo = !!document.createElement('video').canPlayType;
 
 if (supportsVideo) {
 
   const videoContainer = document.querySelector('.video-module');
-  const video = videoContainer.querySelector('.video-module__display');
+  const videoDisplay = videoContainer.querySelector('.video-module__display');
   const videoControls = videoContainer.querySelector('.video-module__controls');
 
-  video.controls = false;
+  videoDisplay.controls = false;
   videoControls.style.display = 'grid';
 
 
-  /* Timeline */
-  const progress = videoControls.querySelector('.v-controls__timeline-full');
-  const progressBar = videoControls.querySelector('.v-controls__timeline-filled');
+  /* Блок управления таймлайном */
 
-  // Занесли в элемент прогресс данные о длине видео
-  video.addEventListener('loadedmetadata', () => {
-    progress.setAttribute('max', video.duration);
+  const fullTimeline = videoControls.querySelector('.v-controls__timeline-full');
+  const filledTimeline = videoControls.querySelector('.v-controls__timeline-filled');
+
+  const currentTimeIndicator = videoControls.querySelector('.v-controls__current-time');
+  const fullTimeIndicator = videoControls.querySelector('.v-controls__full-time');
+
+  const getTime = (time) => { 
+    let minutes = Math.trunc(time/60);
+    if (minutes < 10) minutes = `0${minutes}`;
+    let seconds = Math.trunc(time%60);
+    if (seconds < 10) seconds = `0${seconds}`;
+    return `${minutes}:${seconds}`;
+  }
+
+  // Занесли в элемент прогресс (и не только в него) данные о длине видео
+  videoDisplay.addEventListener('loadedmetadata', () => {
+    fullTimeline.setAttribute('max', videoDisplay.duration);
+    currentTimeIndicator.textContent = "00:00";
+    fullTimeIndicator.textContent = getTime(videoDisplay.duration);
   });
 
   // Если позиция таймлайна поменялась, то...
-  video.addEventListener('timeupdate', function() {
-    if (!progress.getAttribute('max')) progress.setAttribute('max', video.duration); // Для мобильных браузеров
-    progress.value = video.currentTime; // ...меняем текущее значение прогресса...
-    progressBar.style.width = Math.floor((video.currentTime / video.duration) * 100) + '%'; // ...и перерисовываем шкалу заполненности
+  videoDisplay.addEventListener('timeupdate', () => {
+    if (!fullTimeline.getAttribute('max')) fullTimeline.setAttribute('max', videoDisplay.duration); // Для мобильных браузеров
+    fullTimeline.value = videoDisplay.currentTime; // ...меняем текущее значение прогресса...
+    filledTimeline.style.width = Math.floor((videoDisplay.currentTime / videoDisplay.duration) * 100) + '%'; // ...и перерисовываем шкалу заполненности
+    currentTimeIndicator.textContent = getTime(videoDisplay.currentTime);
   });
 
   // Реакция на клик пользователя в по таймлайну
-  progress.addEventListener('click', function(evt) {
-    video.currentTime = (evt.offsetX / this.offsetWidth) * video.duration;
+  fullTimeline.addEventListener('click', function (evt) {
+    videoDisplay.currentTime = (evt.offsetX / this.offsetWidth) * videoDisplay.duration;
   });
 
-
-  /* Play / Pause */
-
-  /* А ВОТ МНЕ ТОЧНО НУЖНО ЗАВОДИТЬ ПЕРЕМЕННЫЕ ДЛЯ ТАКИХ ПРОСТЫХ ОПЕРАЦИЙ? Убери, если упоминается только 1 раз */
-
-  const playpause = videoControls.querySelector('.v-controls__play-pause');
+  const playPauseButton = videoControls.querySelector('.v-controls__play-pause');
 
   const playPauseFunction = () => {
-    if (video.paused || video.ended) {
-      video.play();
-      playpause.style = 'background-image: url("../img/svg/player/pause-white-18dp.svg")';
+    if (videoDisplay.paused || videoDisplay.ended) {
+      videoDisplay.play();
+      playPauseButton.style = 'background-image: url("../img/svg/player/pause-white-18dp.svg")';
     }
     else {
-      video.pause();
-      playpause.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
+      videoDisplay.pause();
+      playPauseButton.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
     }
   }
   
-  playpause.addEventListener('click', playPauseFunction);
-  video.addEventListener('click', playPauseFunction);
+  playPauseButton.addEventListener('click', playPauseFunction);
+  videoDisplay.addEventListener('click', playPauseFunction);
 
-  /* Stop */
-  const stop = videoControls.querySelector('.v-controls__stop');
-  stop.addEventListener('click', () => {
-    video.pause();
-    video.currentTime = 0;
-    progress.value = 0;
+  videoControls.querySelector('.v-controls__stop').addEventListener('click', () => {
+    videoDisplay.pause();
+    videoDisplay.currentTime = 0;
+    fullTimeline.value = 0;
   });
 
-  /* Перемотки */
-  const rewindRight = videoControls.querySelector('.v-controls__rewind-right');
-  rewindRight.addEventListener('click', () => {
-    video.currentTime += 5;
-    console.log(video.currentTime);
-  });
-
-  const rewindLeft = videoControls.querySelector('.v-controls__rewind-left');
-  rewindLeft.addEventListener('click', () => {
-    video.currentTime -= 5;
-    console.log(video.currentTime);
-  });
+  videoControls.querySelector('.v-controls__rewind-right').addEventListener('click', () => videoDisplay.currentTime += 5);
+  videoControls.querySelector('.v-controls__rewind-left').addEventListener('click', () => videoDisplay.currentTime -= 5);
 
 
-  /* Sound */
-  const mute = videoControls.querySelector('.v-controls__mute');
-  const volinc = videoControls.querySelector('.v-controls__sound-up');
-  const voldec = videoControls.querySelector('.v-controls__sound-down');
+  /* Блок управления звуком */
+  const muteButton = videoControls.querySelector('.v-controls__mute');
   const soundIndicator = videoControls.querySelector('.v-controls__sound-indicator');
 
-  var alterVolume = (dir) => {
-    var currentVolume = Math.floor(video.volume * 10) / 10;
+  const changeVolume = (dir) => {
+    let currentVolume = Math.floor(videoDisplay.volume * 10) / 10;
     if (dir === '+') {
       if (currentVolume < 1) {
-        video.volume = (video.volume + 0.1).toFixed(1);
+        videoDisplay.volume = (videoDisplay.volume + 0.1).toFixed(1);
         soundIndicator.value = Number(soundIndicator.value) + 0.1;
       }
     }
     else if (dir === '-') {
       if (currentVolume > 0) {
-        video.volume = (video.volume - 0.1).toFixed(1);
+        videoDisplay.volume = (videoDisplay.volume - 0.1).toFixed(1);
         soundIndicator.value = Number(soundIndicator.value) - 0.1;
       }
     }
   }
 
-  mute.addEventListener('click', () => {
-    video.muted = !video.muted;
-    if (video.muted) mute.style = 'background-image: url("../img/svg/player/volume_mute-white-18dp.svg")';
-    else mute.style = 'background-image: url("../img/svg/player/volume_off-white-18dp.svg")';
+  muteButton.addEventListener('click', () => {
+    videoDisplay.muted = !videoDisplay.muted;
+    if (videoDisplay.muted) muteButton.style = 'background-image: url("../img/svg/player/volume_off-white-18dp.svg")';
+    else muteButton.style = 'background-image: url("../img/svg/player/volume_mute-white-18dp.svg")';
   });
 
-  volinc.addEventListener('click', () => {
-    alterVolume('+');
+  videoControls.querySelector('.v-controls__sound-up').addEventListener('click', () => {
+    changeVolume('+');
   });
 
-  voldec.addEventListener('click', () => {
-    alterVolume('-');
+  videoControls.querySelector('.v-controls__sound-down').addEventListener('click', () => {
+    changeVolume('-');
   });
 
-	soundIndicator.addEventListener("input", function() {
-    video.volume = soundIndicator.value;
+	soundIndicator.addEventListener("input", () => {
+    videoDisplay.volume = soundIndicator.value;
 	});
 
 
-  /* Fullscreen */
-  let fullscreen = videoControls.querySelector('.v-controls__fullscreen');
+  /* Блок управления полноэкранным режимом */
+  const fullscreenButton = videoControls.querySelector('.v-controls__fullscreen');
 
   // Проверка, поддерживает ли браузер Fullscreen API
-  var fullScreenEnabled = !!(document.fullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled || document.webkitSupportsFullscreen || document.webkitFullscreenEnabled || document.createElement('video').webkitRequestFullScreen);
+  const fullScreenEnabled = !!(document.fullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled || document.webkitSupportsFullscreen || document.webkitFullscreenEnabled || document.createElement('video').webkitRequestFullScreen);
   // Если не поддерживает - прячем кнопку
   if (!fullScreenEnabled) { // 
-    fullscreen.style.display = 'none';
+    fullscreenButton.style.display = 'none';
   }
 
   // Функция установки видеоконтейнеру атрибута полноэкранности
-  var setFullscreenData = function(state) {
+  const setFullscreenData = (state) => {
     videoContainer.setAttribute('data-fullscreen', !!state);
   }
 
   
   // Функция проверки, находится ли документ в полноэкранном режиме
-   var isFullScreen = function() {
-     return !!(document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
-   }
+  const isFullScreen = function() {
+    return !!(document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
+  }
 
   // Функция-обработчик, свитчер фулскрина
-  var handleFullscreen = function() {
+  const handleFullscreen = function() {
     // Если режим фулскрина активен...
     if (isFullScreen()) {
       // ... то выйти из режима фуллскрин
@@ -330,37 +326,36 @@ if (supportsVideo) {
       else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
       else if (document.msExitFullscreen) document.msExitFullscreen();
       setFullscreenData(false);
-      fullscreen.style = 'background-image: url("../img/svg/player/fullscreen-white-18dp.svg")';
+      fullscreenButton.style = 'background-image: url("../img/svg/player/fullscreen-white-18dp.svg")';
     }
     else {
       // ...иначе войти в полноэкранный режим
       if (videoContainer.requestFullscreen) videoContainer.requestFullscreen();
       else if (videoContainer.mozRequestFullScreen) videoContainer.mozRequestFullScreen();
-      else if (videoContainer.webkitRequestFullScreen) video.webkitRequestFullScreen();
+      else if (videoContainer.webkitRequestFullScreen) videoDisplay.webkitRequestFullScreen();
       else if (videoContainer.msRequestFullscreen) videoContainer.msRequestFullscreen();
       setFullscreenData(true);
-      fullscreen.style = 'background-image: url("../img/svg/player/fullscreen_exit-white-18dp.svg")';
+      fullscreenButton.style = 'background-image: url("../img/svg/player/fullscreen_exit-white-18dp.svg")';
     }
   }
 
   // Слушатель кнопки фулскрина
-  fullscreen.addEventListener('click', function() {
+  fullscreenButton.addEventListener('click', () => {
     handleFullscreen();
   });
 
   // Слушатели событий изменения полноэкранного режима из других элементов управления
-  document.addEventListener('fullscreenchange', function(e) {
+  document.addEventListener('fullscreenchange', () => {
     setFullscreenData(!!(document.fullScreen || document.fullscreenElement));
   });
-  document.addEventListener('webkitfullscreenchange', function() {
+  document.addEventListener('webkitfullscreenchange', () => {
     setFullscreenData(!!document.webkitIsFullScreen);
   });
-  document.addEventListener('mozfullscreenchange', function() {
+  document.addEventListener('mozfullscreenchange', () => {
     setFullscreenData(!!document.mozFullScreen);
   });
-  document.addEventListener('msfullscreenchange', function() {
+  document.addEventListener('msfullscreenchange', () => {
     setFullscreenData(!!document.msFullscreenElement);
   });
-
 
 }
