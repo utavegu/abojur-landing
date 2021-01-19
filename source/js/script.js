@@ -176,7 +176,7 @@ const shiftLeft = () => {
 arrowRight.onclick = shiftRight;
 arrowLeft.onclick = shiftLeft;
 
-// setInterval(shiftRight, 5000);
+setInterval(shiftRight, 5000);
 
 
 
