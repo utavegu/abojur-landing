@@ -211,7 +211,7 @@
         </div>
 
         <figure class="mission__video-container video-module">
-          <video class="video-module__display" poster="img/mission-1.jpg" width="573" height="598" preload="metadata" controls>
+          <video class="video-module__display" poster="img/mission-group.png" width="573" height="598" preload="metadata" controls>
             <!-- ПОСНИМАЙ САМ, НАКОНВЕРТИ В НУЖНЫЕ ФОРМАТЫ И ЗАМЕНИ -->
             <source src="video/rabbit320.mp4" type="video/mp4">
             <source src="video/rabbit320.webm" type="video/webm">
@@ -225,6 +225,7 @@
               <a href="video/rabbit320.mp4">Download MP4</a> 
             </p>
             -->
+            <track kind="subtitles" src="video/subtitles/ru.wtt" srclang="ru" label="Русский" default>
           </video>
           <div class="video-module__controls v-controls">
             <div class="v-controls__timeline">
@@ -235,36 +236,32 @@
             <div class="v-controls__current-time-container">
               <time class="v-controls__current-time"></time> / <time class="v-controls__full-time"></time>
             </div>
-            <button class="v-controls__fullscreen" type="button">
+            <button class="v-controls__fullscreen" type="button" title="Полноэкранный режим">
               <span class="visually-hidden">Fullscreen</span>
             </button>
-            <button class="v-controls__play-pause" type="button">
+            <button class="v-controls__play-pause" type="button" title="Плэй / Пауза">
               <span class="visually-hidden">Play/Pause</span>
             </button>
-            <button class="v-controls__stop" type="button">
+            <button class="v-controls__stop" type="button" title="Стоп">
               <span class="visually-hidden">Stop</span>
             </button>
-            <button class="v-controls__rewind-left" type="button">
+            <button class="v-controls__rewind-left" type="button" title="Перемотать назад">
               <span class="visually-hidden">Rewind left</span>
             </button>
-            <button class="v-controls__rewind-right" type="button">
+            <button class="v-controls__rewind-right" type="button" title="Перемотать вперед">
               <span class="visually-hidden">Rewind right</span>
             </button>
-            <button class="v-controls__sound-down" type="button">
+            <button class="v-controls__sound-down" type="button" title="Убавить звук">
               <span class="visually-hidden">Turn down the sound</span>
             </button>
-            <button class="v-controls__sound-up" type="button">
+            <button class="v-controls__sound-up" type="button" title="Добавить звук">
               <span class="visually-hidden">Turn up the sound</span>
             </button>
-            <button class="v-controls__mute" type="button">
+            <button class="v-controls__mute" type="button" title="Беззвучный режим">
               <span class="visually-hidden">Mute/Unmute</span>
             </button>
-            <input class="v-controls__sound-indicator" type="range" min="0" max="1" step="0.1" value="1">
-            
+            <input class="v-controls__sound-indicator" type="range" min="0" max="1" step="0.1" value="1">  
           </div>
-          <!-- <figcaption>
-            СЮДА НАЗВАНИЕ ВИДЕО НА 2 СЕКУНДЫ, ПОСЛЕ КЛИКА ПО ПЛЕЮ
-          </figcaption> -->
         </figure>
 
 			</div>

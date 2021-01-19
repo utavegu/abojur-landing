@@ -1,0 +1,10 @@
+WEBVTT
+
+00:00.000 --> 00:02.000 line:1 position:50% align:center size:100% background-color:red
+  Заяц появился
+
+00:03.000 --> 00:05.000 line:1 position:50% align:end size:100% vertical:lr
+  Камера вращается...
+
+00:06.000 --> 00:07.000 line:1 position:71% align:end size:100% vertical:rl
+  Всё! Спасибо за просмотр!

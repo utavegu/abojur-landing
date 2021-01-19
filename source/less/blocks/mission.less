@@ -82,32 +82,13 @@
   height: 598px;
 }
 
-// .mission__video-container:hover::after .video-module__display {
-//   .pseudo-element;
-//   background-image: url("../img/svg/play.svg");
-//   background-color: black;
-//   top: 45%;
-//   left: 50%;
-//   margin-right: -50%;
-//   transform: translate(-45%, -50%);
-//   width: 97px;
-//   height: 97px;
-//   background-color: #343235;
-//   border-radius: 50%;
-//   z-index: 110;
-//   opacity: 0.5;
-// }
-
 .video-module__display {
   display: block;
   margin: 0;
   padding: 0;
 
   width: 573px; 
-  height: 598px; 
-
-  // width: 100%;
-  // height: auto; 
+  height: 598px;
 }
 
 .v-controls {
@@ -146,8 +127,6 @@
   outline: none; // Позже - внутренний, тень-свечение
 }
 
-// .v-controls li:not(.v-controls__timeline) {}
-
 .v-controls__timeline {
   grid-column-start: 1;
   grid-column-end: 9;
@@ -175,14 +154,6 @@
 .v-controls__timeline-full::-webkit-progress-value {
   background-color: #fff;
 }
-
-// .v-controls progress::-moz-progress-bar {
-// 	background-color: red;
-// }
-// /* Chrome requires its own rule for this, otherwise it ignores it */
-// .v-controls progress::-webkit-progress-value {
-// 	background-color:red;
-// }
 
 .v-controls__fullscreen {
   background-image: url("../img/svg/player/fullscreen-white-18dp.svg");
@@ -230,8 +201,6 @@
 
 
 
-
-
 /* РЭНДЖ ЗВУКА */
 
 .v-controls__sound-indicator {
@@ -243,7 +212,6 @@
 
   &:focus {
     outline: none;
-    // background: #808080;
   }
 
   &:disabled {
@@ -251,16 +219,14 @@
   }
 }
 
-
 // Фокус в Хромиуме
 .v-controls__sound-indicator:focus::-webkit-slider-runnable-track {
-  // background: #808080;
+  outline: none;
 }
 
 .v-controls__sound-indicator:focus::-moz-range-track {
   outline: none;
 }
-
 
 // Бегунок в Хромиуме
 .v-controls__sound-indicator::-webkit-slider-thumb {
@@ -296,7 +262,6 @@
   background: #fff;
   cursor: ew-resize;
 }
-
 
 // Дорожка в Хромиуме
 .v-controls__sound-indicator::-webkit-slider-runnable-track {
@@ -355,17 +320,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 /* fullscreen */
 html:-ms-fullscreen {
 	width: 100%;
@@ -376,36 +330,31 @@ html:-ms-fullscreen {
 }
 
 /* hide controls on fullscreen with WebKit */
-figure[data-fullscreen=true] video::-webkit-media-controls {
+.mission__video-container[data-fullscreen=true] .video-module__display::-webkit-media-controls {
 	display: none !important;
 }
 
-figure[data-fullscreen=true] {
+.mission__video-container[data-fullscreen=true] {
 	max-width: 100%;
 	width: 100%;
 	margin: 0;
   padding: 0;
 }
 
-figure[data-fullscreen=true] video {
+.mission__video-container[data-fullscreen=true] .video-module__display {
+  width: 100%;
 	height: auto;
 }
 
-// figure[data-fullscreen=true] figcaption {
-// 	display: none;
-// }
-
-figure[data-fullscreen=true] .v-controls {
+.mission__video-container[data-fullscreen=true] .v-controls {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	z-index: 100;
+  z-index: 100;
+  opacity: 0.2;
 }
 
-figure[data-fullscreen=true] .v-controls li {
-	// width:5%;
-}
-
-figure[data-fullscreen=true] .v-controls .progress {
-	// width: 100%;
+video::cue {
+  background-color: transparent;
+  color: @pastel-color;
 }
