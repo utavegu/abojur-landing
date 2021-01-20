@@ -1,5 +1,3 @@
-// ВЫНЕСИ ВИДЕО-МОДУЛЬ В ОТДЕЛЬНЫЙ ФАЙЛ
-
 .mission {
   .dark-scheme;
   padding-top: 120px;
@@ -69,15 +67,12 @@
   z-index: 1;
 }
 
-
-
 .mission__video-container {
   z-index: 10;
   margin: 0;
   padding: 0;
   position: relative;
   overflow: hidden;
-
   width: 573px; 
   height: 598px;
 }
@@ -86,32 +81,24 @@
   display: block;
   margin: 0;
   padding: 0;
-
   width: 573px; 
   height: 598px;
 }
 
 .v-controls {
   background-color: @dark-background;
-
   margin: 0;
   padding: 0;
-
   width: 100%;
-
   display: none;
-
   grid-template-columns: repeat(9, auto);
   grid-template-rows: repeat(2, 40px);
   align-items: center;
-
   position: absolute;
   bottom: -100px;
   left: 0;
-
   transition: bottom 0.3s;
 }
-
 
 .mission__video-container:hover .v-controls {
   bottom: 0;
@@ -124,17 +111,15 @@
   background-color: inherit;
   background-repeat: no-repeat;
   background-position: center;
-  outline: none; // Позже - внутренний, тень-свечение
+  outline: none;
 }
 
 .v-controls__timeline {
   grid-column-start: 1;
   grid-column-end: 9;
-
   display: flex;
   align-self: center;
   justify-content: center;
-
   padding: 0;
   margin: 0 auto;
   width: 95%;
@@ -199,14 +184,11 @@
   text-align: center;
 }
 
-
-
 /* РЭНДЖ ЗВУКА */
 
 .v-controls__sound-indicator {
   -webkit-appearance: none;
   background: transparent;
-
   width: 100px;
   height: 20px;
 
@@ -318,7 +300,6 @@
 .v-controls__sound-indicator:focus::-ms-fill-upper {
   background: #367ebd;
 }
-
 
 /* fullscreen */
 html:-ms-fullscreen {

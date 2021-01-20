@@ -56,66 +56,50 @@ anchor.addEventListener('click', go);
 
 /* Modal-consultation script */
 
-/* ВНИМАТЕЛЬНО ПЕРЕПРОВЕРЬ ВИСЯЩИЕ ОБРАБОТЧИКИ ЧЕРЕЗ ИВЕНТ... А лучше в ФФ, там понятнее */
-
-// Кнопка вызова модалки
 const askQuestionButton = document.querySelector(".promo__button");
-// Всё модальное окно
 const modalConsultation = document.querySelector(".modal-consultation");
-
-// Крестик закрытия модалки
 const modalConsultationCloseButton = modalConsultation.querySelector(".modal-consultation__close");
-// Кнопка отправки формы
 const modalConsultationSendButton = modalConsultation.querySelector(".modal-consultation__send");
-// Ловушки фокуса
 const modalConsultationTraps = modalConsultation.querySelectorAll(".focus-trap");
 
+const modalConsultationOpen = () => {
+  document.body.classList.add("overlay");
+  modalConsultation.classList.add("is-opened");
+  modalConsultation.querySelector("textarea").focus();
+  document.addEventListener("keydown", onEscKeyDown);
+  document.querySelector(".overlay").addEventListener("click", onOverlayClick);
+}
 
-// Функция закрытия модалки по нажатию клавиши Esc
+const modalConsultationClose = () => {
+  document.body.classList.remove("overlay");
+  modalConsultation.classList.remove("is-opened");
+  document.removeEventListener("keydown", onEscKeyDown);
+  document.body.removeEventListener("click", onOverlayClick);
+}
+
 const onEscKeyDown = (evt) => {
-  if (evt.key === `Escape` || evt.key === `Esc`) {
+  if (evt.key === "Escape" || evt.key === "Esc") {
     modalConsultationClose();
   }
 };
 
-// Функция закрытия модалки по клику по оверлэю
 const onOverlayClick = (evt) => {
   if (evt.target.className === "overlay") {
     modalConsultationClose();
   };
 };
 
-// Функция открытия модального окна
-const modalConsultationOpen = () => {
-  document.body.classList.add("overlay");
-  modalConsultation.classList.add("is-opened");
-  modalConsultation.querySelector("textarea").focus();
-  document.addEventListener(`keydown`, onEscKeyDown);
-  document.querySelector(".overlay").addEventListener("click", onOverlayClick);
-}
-
-// Функция закрытия модального окна
-const modalConsultationClose = () => {
-  document.body.classList.remove("overlay");
-  modalConsultation.classList.remove("is-opened");
-  document.removeEventListener(`keydown`, onEscKeyDown);
-  document.body.removeEventListener("click", onOverlayClick);
-}
-
-// Слушаель открытия модалки по кнопке
 askQuestionButton.addEventListener("click", (evt) => {
   evt.preventDefault();
   evt.stopPropagation() 
   modalConsultationOpen();
 });
 
-// Слушаель закрытия модалки по крестику
 modalConsultationCloseButton.addEventListener("click", (evt) => {
   evt.preventDefault();
   modalConsultationClose();
 });
 
-// Ловушки фокуса
 modalConsultationTraps.forEach(element => element.addEventListener("focus", () => {
   if (element.classList.contains("focus-trap--upper")) {
     modalConsultation.querySelector(".modal-consultation__close").focus();
@@ -127,8 +111,6 @@ modalConsultationTraps.forEach(element => element.addEventListener("focus", () =
 
 
 /* SLIDER SCRIPT */
-
-/* ОТРЕФАКТОРИ-КА, ПОЖАЛУЙ, НАЗВАНИЕ МОДУЛЯ СЛАЙДЕРА */
 
 const carousel = document.querySelector('.solutions__slider');
 const tape = carousel.querySelector('.solutions__slider-list');
@@ -193,12 +175,10 @@ if (supportsVideo) {
   videoDisplay.controls = false;
   videoControls.style.display = 'grid';
 
-
   /* Блок управления таймлайном */
 
   const fullTimeline = videoControls.querySelector('.v-controls__timeline-full');
   const filledTimeline = videoControls.querySelector('.v-controls__timeline-filled');
-
   const currentTimeIndicator = videoControls.querySelector('.v-controls__current-time');
   const fullTimeIndicator = videoControls.querySelector('.v-controls__full-time');
 
@@ -210,25 +190,22 @@ if (supportsVideo) {
     return `${minutes}:${seconds}`;
   }
 
-  // Занесли в элемент прогресс (и не только в него) данные о длине видео
   videoDisplay.addEventListener('loadedmetadata', () => {
     fullTimeline.setAttribute('max', videoDisplay.duration);
     currentTimeIndicator.textContent = "00:00";
     fullTimeIndicator.textContent = getTime(videoDisplay.duration);
   });
 
-  // Если позиция таймлайна поменялась, то...
   videoDisplay.addEventListener('timeupdate', () => {
     if (!fullTimeline.getAttribute('max')) fullTimeline.setAttribute('max', videoDisplay.duration); // Для мобильных браузеров
-    fullTimeline.value = videoDisplay.currentTime; // ...меняем текущее значение прогресса...
-    filledTimeline.style.width = Math.floor((videoDisplay.currentTime / videoDisplay.duration) * 100) + '%'; // ...и перерисовываем шкалу заполненности
+    fullTimeline.value = videoDisplay.currentTime;
+    filledTimeline.style.width = Math.floor((videoDisplay.currentTime / videoDisplay.duration) * 100) + '%';
     currentTimeIndicator.textContent = getTime(videoDisplay.currentTime);
     if (videoDisplay.ended) {
       playPauseButton.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
     }
   });
 
-  // Реакция на клик пользователя в по таймлайну
   fullTimeline.addEventListener('click', function (evt) {
     videoDisplay.currentTime = (evt.offsetX / this.offsetWidth) * videoDisplay.duration;
   });
@@ -259,9 +236,8 @@ if (supportsVideo) {
   videoControls.querySelector('.v-controls__rewind-right').addEventListener('click', () => videoDisplay.currentTime += 5);
   videoControls.querySelector('.v-controls__rewind-left').addEventListener('click', () => videoDisplay.currentTime -= 5);
 
-
-
   /* Блок управления звуком */
+
   const muteButton = videoControls.querySelector('.v-controls__mute');
   const soundIndicator = videoControls.querySelector('.v-controls__sound-indicator');
 
@@ -283,7 +259,6 @@ if (supportsVideo) {
 
   soundIndicator.addEventListener("input", () => {
     videoDisplay.volume = soundIndicator.value;
-    
   });
   
   soundIndicator.addEventListener("change", () => {
@@ -314,34 +289,24 @@ if (supportsVideo) {
     changeVolume('-');
   });
 
-
-
   /* Блок управления полноэкранным режимом */
   const fullscreenButton = videoControls.querySelector('.v-controls__fullscreen');
 
-  // Проверка, поддерживает ли браузер Fullscreen API
   const fullScreenEnabled = !!(document.fullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled || document.webkitSupportsFullscreen || document.webkitFullscreenEnabled || document.createElement('video').webkitRequestFullScreen);
-  // Если не поддерживает - прячем кнопку
   if (!fullScreenEnabled) { // 
     fullscreenButton.style.display = 'none';
   }
 
-  // Функция установки видеоконтейнеру атрибута полноэкранности
   const setFullscreenData = (state) => {
     videoContainer.setAttribute('data-fullscreen', !!state);
   }
 
-  
-  // Функция проверки, находится ли документ в полноэкранном режиме
   const isFullScreen = function() {
     return !!(document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
   }
 
-  // Функция-обработчик, свитчер фулскрина
   const handleFullscreen = function() {
-    // Если режим фулскрина активен...
     if (isFullScreen()) {
-      // ... то выйти из режима фуллскрин
       if (document.exitFullscreen) document.exitFullscreen();
       else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
       else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
@@ -350,7 +315,6 @@ if (supportsVideo) {
       fullscreenButton.style = 'background-image: url("../img/svg/player/fullscreen-white-18dp.svg")';
     }
     else {
-      // ...иначе войти в полноэкранный режим
       if (videoContainer.requestFullscreen) videoContainer.requestFullscreen();
       else if (videoContainer.mozRequestFullScreen) videoContainer.mozRequestFullScreen();
       else if (videoContainer.webkitRequestFullScreen) videoDisplay.webkitRequestFullScreen();
@@ -360,21 +324,22 @@ if (supportsVideo) {
     }
   }
 
-  // Слушатель кнопки фулскрина
   fullscreenButton.addEventListener('click', () => {
     handleFullscreen();
   });
 
-  // Слушатели событий изменения полноэкранного режима из других элементов управления
   document.addEventListener('fullscreenchange', () => {
     setFullscreenData(!!(document.fullScreen || document.fullscreenElement));
   });
+
   document.addEventListener('webkitfullscreenchange', () => {
     setFullscreenData(!!document.webkitIsFullScreen);
   });
+
   document.addEventListener('mozfullscreenchange', () => {
     setFullscreenData(!!document.mozFullScreen);
   });
+  
   document.addEventListener('msfullscreenchange', () => {
     setFullscreenData(!!document.msFullscreenElement);
   });
