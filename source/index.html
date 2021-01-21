@@ -8,9 +8,12 @@
   <meta name="description" content="Интерьерный текстиль по индивидуальным размерам с доставкой на дом">
   <meta http-equiv="X-UA-Compatible", content="IE=edge,chrome=1">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="preload" href="fonts/Montserrat-Medium500.woff2" as="font">
-  <link rel="preload" href="fonts/Montserrat-Bold700.woff2" as="font">
-  <link rel="preload" href="fonts/OldStandardTT-Regular400.woff2" as="font">
+  <link rel="preload" href="fonts/Montserrat-Medium500.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="fonts/Montserrat-Bold700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="fonts/OldStandardTT-Regular400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="fonts/Montserrat-Medium500.woff" as="font" type="font/woff" crossorigin="anonymous">
+  <link rel="preload" href="fonts/Montserrat-Bold700.woff" as="font" type="font/woff" crossorigin="anonymous">
+  <link rel="preload" href="fonts/OldStandardTT-Regular400.woff" as="font" type="font/woff" crossorigin="anonymous">
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 	<!--
   <link rel="stylesheet" href="css/min-style.css">
@@ -286,8 +289,8 @@
               <input class="feedback__text" id="your-name" name="your-name" type="text">
             </p>
             <p class="feedback__text-wrapper">
-              <label for="your-phone">Введите телефон</label>
-              <input class="feedback__text" id="your-phone" name="your-phone" type="text">
+              <label for="your-phone">Введите телефон*</label>
+              <input class="feedback__text" id="your-phone" name="your-phone" type="text" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" required>
             </p>
             <div class="feedback__wrapper">
               <select class="feedback__select">
@@ -301,16 +304,16 @@
               </select>
               <p class="feedback__agree">
                 <label>
-                  <input class="feedback__checkbox visually-hidden" type="checkbox">
+                  <input class="feedback__checkbox visually-hidden" type="checkbox" required>
                   <span class="feedback__custom-checkbox"></span>
-                  <span class="feedback__agreement">Согласие на обработку персональных данных</span>
+                  <span class="feedback__agreement">Согласие на обработку персональных данных*</span>
                 </label>
               </p>
             </div>
             <button class="feedback__button button" type="submit">Оставить заявку</button>
           </form>
         </div>
-        <img class="feedback__map" src="img/feedback-1.png" alt="Санкт Петербург, Лиговский проспект, 30А" width="474" height="734">
+        <img class="feedback__map" src="img/feedback-group.png" alt="Санкт Петербург, Лиговский проспект, 30А" width="474" height="734">
       </div>
 		</section>
   </main>
@@ -333,6 +336,12 @@
       </form>
       <button class="modal-consultation__close button" type="button">Отмена</button>
       <span class="focus-trap focus-trap--lower" tabindex="0" aria-hidden="true"></span>
+    </div>
+  </div>
+  <div class="modal modal-feedback">
+    <div class="modal-feedback__inner-container">
+      <b>Спасибо!</b>
+      <p>Ваш вопрос успешно отправлен и наш менеджер перезвонит вам в указанное время.</p>
     </div>
   </div>
   <script src="js/script.js" defer></script>

@@ -13,8 +13,8 @@
   display: block;
 }
 
-
-.modal-consultation::before  {
+.modal-consultation::before,
+.modal-feedback::before {
   content: "";
   position: absolute;
   background-image: url("../img/ornament-1.png");
@@ -26,13 +26,20 @@
   border-radius: 50px;
 }
 
-.modal-consultation__inner-container {
+.modal-consultation__inner-container,
+.modal-feedback__inner-container
+ {
   padding: 10px;
   text-align: center;
   .dark-scheme;
   background-color: rgba(52, 50, 53, 0.9);
   height: 100%;
   border-radius: 50px;
+}
+
+.modal-feedback {
+  height: auto;
+  width: 600px;
 }
 
 .modal-consultation textarea {

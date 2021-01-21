@@ -345,3 +345,35 @@ if (supportsVideo) {
   });
 
 }
+
+
+
+/* FEEDBACK-MODAL SCRIPT */
+const feedbackSendButton = document.querySelector(".feedback__button");
+const modalFeedback = document.querySelector(".modal-feedback");
+const feedbackAgree = document.querySelector(".feedback__checkbox");
+const feedbackForm = document.querySelector(".feedback form");
+
+const modalFeedbackOpen = () => {
+  document.body.classList.add("overlay");
+  modalFeedback.classList.add("is-opened");
+}
+
+const modalFeedbackClose = () => {
+  document.body.classList.remove("overlay");
+  modalFeedback.classList.remove("is-opened");
+}
+
+feedbackForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  modalFeedbackOpen();
+  setTimeout(modalFeedbackClose, 3000);
+})
+
+feedbackAgree.addEventListener("invalid", function () {
+  this.setCustomValidity("К сожалению, нам нужно, чтобы вы подтвердили свое согласие, как того требует текущее законодательство");
+})
+
+feedbackAgree.addEventListener("change", function () {
+  this.setCustomValidity("");
+})
