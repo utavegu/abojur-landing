@@ -14,7 +14,9 @@
 }
 
 .modal-consultation::before,
-.modal-feedback::before {
+.modal-feedback::before,
+.modal-shopping-cart::before,
+.modal-call-order::before {
   content: "";
   position: absolute;
   background-image: url("../img/ornament-1.png");
@@ -27,8 +29,9 @@
 }
 
 .modal-consultation__inner-container,
-.modal-feedback__inner-container
- {
+.modal-feedback__inner-container,
+.modal-shopping-cart__inner-container,
+.modal-call-order__inner-container {
   padding: 10px;
   text-align: center;
   .dark-scheme;
@@ -42,6 +45,30 @@
   width: 600px;
 }
 
+.modal-shopping-cart {
+  height: 500px;
+  width: 800px;
+}
+
+.modal-call-order {
+  height: auto;
+}
+
+.modal-shopping-cart__basket {
+  height: 370px;
+  margin: 10px;
+  border: 5px solid @light-brown-color;
+  border-radius: 50px;
+}
+
+.modal-shopping-cart button,
+.modal-call-order button {
+  background-color: transparent;
+  border-left: none;
+  border-right: none;
+  margin: 10px;
+}
+
 .modal-consultation textarea {
   resize: none;
   background-color: transparent;
@@ -51,11 +78,18 @@
   height: 200px;
 }
 
-.modal-consultation input {
+.modal-consultation input,
+.modal-call-order input {
   border: none;
   border-bottom: 1px solid #a78587;
   background-color: transparent;
   color: #a78587;
+}
+
+.modal-call-order input {
+  width: 90%;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .modal-consultation__questionnaire {

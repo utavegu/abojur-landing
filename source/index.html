@@ -25,7 +25,7 @@
 		<div class="container">
 			<h1 class="visually-hidden">Студия дизайнерского текстиля "Abojur"</h1>
       <img src="img/logo.png" alt="Abojur - студия дизайнерского текстиля в Санкт Петербурге" width="375" height="52">
-      <a class="main-header__phone" href="tel:+79818574624">+7 (981) 857-46-24 <span>заказать звонок</span></a>
+      <p class="main-header__phone"><a href="tel:+79818574624">+7 (981) 857-46-24</a> <a class="main-header__call-back" href="#">заказать звонок</a></p>
       <address class="main-header__address">Санкт Петербург, набережная реки Карповки, дом 5, литер П</address>
       <nav class="main-header__navigation hidden">
         <ul class="main-header__navigation-list">
@@ -293,7 +293,7 @@
             </p>
             <p class="feedback__text-wrapper">
               <label for="your-phone">Введите телефон*</label>
-              <input class="feedback__text" id="your-phone" name="your-phone" type="text" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" required>
+              <input class="feedback__text" id="your-phone" name="your-phone" type="tel" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" required>
             </p>
             <div class="feedback__wrapper">
               <select class="feedback__select">
@@ -332,9 +332,9 @@
           <label for="first-name">Как к вам обращаться?</label>
           <input type="text" id="first-name" name="first-name">
           <label for="mail">Ваша почта*</label>
-          <input type="text" id="mail" name="mail" required>
+          <input type="email" id="mail" name="mail" required>
           <label for="phone">Ваш телефон</label>
-          <input type="text" id="phone" name="phone" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$">
+          <input type="tel" id="phone" name="phone" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$">
         </div>
         <button class="modal-consultation__send button" type="submit" data-description="Из соображений безопасности почтовый адрес отцеплен">Отправить</button>
       </form>
@@ -352,8 +352,29 @@
 
   <div class="modal modal-shopping-cart">
     <div class="modal-shopping-cart__inner-container">
-      <div class="modal-shopping-cart__basket"></div>
-      <div class="modal-shopping-cart__control"></div>
+      <div class="modal-shopping-cart__basket">
+        В корзине пока нет товаров
+      </div>
+      <span class="focus-trap focus-trap--upper" tabindex="0" aria-hidden="true"></span>
+      <button class="modal-shopping-cart__close-button button" type="button">Закрыть корзину</button>
+      <button class="modal-shopping-cart__clear-button button" type="button">Очистить корзину</button>
+      <button class="modal-shopping-cart__order-button button" type="button">Оформить заказ</button>
+      <span class="focus-trap focus-trap--lower" tabindex="0" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <div class="modal modal-call-order">
+    <div class="modal-call-order__inner-container">
+      <form action="">
+        <span class="focus-trap focus-trap--upper" tabindex="0" aria-hidden="true"></span>
+        <label>
+          Оставьте ваш телефон и мы обязательно свяжемся с вами
+          <input type="tel" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$">
+        </label>
+        <button class="modal-call-order__cancel-button button" type="button">Отмена</button>
+        <button class="modal-call-order__submit-button button" type="submit">Отправить</button>
+        <span class="focus-trap focus-trap--lower" tabindex="0" aria-hidden="true"></span>
+      </form>
     </div>
   </div>
 

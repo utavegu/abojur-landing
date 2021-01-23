@@ -305,50 +305,67 @@ cards.forEach(card => card.addEventListener("click", () => {
 
 /* Modals-common */
 
-/* Modal-consultation script */
-
-const askQuestionButton = document.querySelector(".promo__button");
-const modalConsultation = document.querySelector(".modal-consultation");
-const modalConsultationCloseButton = modalConsultation.querySelector(".modal-consultation__close");
-const modalConsultationSendButton = modalConsultation.querySelector(".modal-consultation__send");
-const modalConsultationTraps = modalConsultation.querySelectorAll(".focus-trap");
-
-const modalConsultationOpen = () => {
+const commonModalOpen = () => {
   document.body.classList.add("overlay");
-  modalConsultation.classList.add("is-opened");
-  modalConsultation.querySelector("textarea").focus();
   document.addEventListener("keydown", onEscKeyDown);
   document.querySelector(".overlay").addEventListener("click", onOverlayClick);
 }
 
-const modalConsultationClose = () => {
+const commonModalClose = () => {
   document.body.classList.remove("overlay");
-  modalConsultation.classList.remove("is-opened");
   document.removeEventListener("keydown", onEscKeyDown);
   document.body.removeEventListener("click", onOverlayClick);
 }
 
+const allModalClose = () => {
+  document.querySelectorAll(".modal").forEach((currentModal) => {
+    if (currentModal.classList.contains("is-opened")) {
+      currentModal.classList.remove("is-opened");
+      commonModalClose();
+    }
+  })
+}
+
 const onEscKeyDown = (evt) => {
   if (evt.key === "Escape" || evt.key === "Esc") {
-    modalConsultationClose();
+    allModalClose();
   }
 };
 
 const onOverlayClick = (evt) => {
   if (evt.target.className === "overlay") {
-    modalConsultationClose();
+    allModalClose();
   };
 };
 
+const onCloseButtonClick = (evt) => {
+  evt.preventDefault();
+  evt.target.parentNode.parentNode.classList.remove("is-opened");
+  commonModalClose();
+}
+
+
+
+/* Modal-consultation script */
+
+const askQuestionButton = document.querySelector(".promo__button");
+const modalConsultation = document.querySelector(".modal-consultation");
+const modalConsultationCloseButton = modalConsultation.querySelector(".modal-consultation__close");
+const modalConsultationTraps = modalConsultation.querySelectorAll(".focus-trap");
+
+const modalConsultationOpen = () => {
+  commonModalOpen();
+  modalConsultation.classList.add("is-opened");
+  modalConsultation.querySelector("textarea").focus();
+}
+
 askQuestionButton.addEventListener("click", (evt) => {
   evt.preventDefault();
-  evt.stopPropagation() 
   modalConsultationOpen();
 });
 
 modalConsultationCloseButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
-  modalConsultationClose();
+  onCloseButtonClick(evt);
 });
 
 modalConsultationTraps.forEach(element => element.addEventListener("focus", () => {
@@ -362,18 +379,19 @@ modalConsultationTraps.forEach(element => element.addEventListener("focus", () =
 
 
 /* FEEDBACK-MODAL SCRIPT */
+
 const feedbackSendButton = document.querySelector(".feedback__button");
 const modalFeedback = document.querySelector(".modal-feedback");
 const feedbackAgree = document.querySelector(".feedback__checkbox");
 const feedbackForm = document.querySelector(".feedback form");
 
 const modalFeedbackOpen = () => {
-  document.body.classList.add("overlay");
+  commonModalOpen();
   modalFeedback.classList.add("is-opened");
 }
 
 const modalFeedbackClose = () => {
-  document.body.classList.remove("overlay");
+  commonModalClose();
   modalFeedback.classList.remove("is-opened");
 }
 
@@ -390,4 +408,77 @@ feedbackAgree.addEventListener("invalid", function () {
 
 feedbackAgree.addEventListener("change", function () {
   this.setCustomValidity("");
+})
+
+
+/* SHOPPING-CART MODAL */
+const openCartButton = document.querySelector(".main-header__shopping-cart");
+const modalShoppingCart = document.querySelector(".modal-shopping-cart");
+const closeCartButton = modalShoppingCart.querySelector(".modal-shopping-cart__close-button");
+const modalShoppingCartTraps = modalShoppingCart.querySelectorAll(".focus-trap");
+
+const shoppingCartOpen = () => {
+  commonModalOpen();
+  modalShoppingCart.classList.add("is-opened");
+  modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
+}
+
+openCartButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  shoppingCartOpen();
+});
+
+closeCartButton.addEventListener("click", (evt) => {
+  onCloseButtonClick(evt);
+});
+
+modalShoppingCartTraps.forEach(element => element.addEventListener("focus", () => {
+  if (element.classList.contains("focus-trap--upper")) {
+    modalShoppingCart.querySelector(".modal-shopping-cart__order-button").focus();
+  } else {
+    modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
+  }
+}));
+
+
+
+/* Call-back modal */
+
+const callBackButton = document.querySelector(".main-header__call-back");
+const modalCallOrder = document.querySelector(".modal-call-order");
+const closemodalCallOrderButton = document.querySelector(".modal-call-order__cancel-button");
+const modalCallOrderTraps = modalCallOrder.querySelectorAll(".focus-trap");
+
+const modalCallOrderOpen = () => {
+  commonModalOpen();
+  modalCallOrder.classList.add("is-opened");
+  modalCallOrder.querySelector("input").focus();
+}
+
+callBackButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  modalCallOrderOpen();
+});
+
+closemodalCallOrderButton.addEventListener("click", (evt) => {
+  onCloseButtonClick(evt);
+  modalCallOrder.classList.remove("is-opened");
+});
+
+modalCallOrderTraps.forEach(element => element.addEventListener("focus", () => {
+  if (element.classList.contains("focus-trap--upper")) {
+    modalCallOrder.querySelector(".modal-call-order__submit-button").focus();
+  } else {
+    modalCallOrder.querySelector("input").focus();
+  }
+}));
+
+modalCallOrder.querySelector("form").addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  //Сюда псевдокласс с контентом "спасибо, мы вам перезвоним и анимационным появлением слов"... Или анимашку "окей"
+  // Хотя мне тут вообще чото не нравится идея и исполнение с закрытием... подумай лучше
+  setTimeout(() => {
+    onCloseButtonClick(evt);
+    modalCallOrder.classList.remove("is-opened");
+  }, 3000);
 })
