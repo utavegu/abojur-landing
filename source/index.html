@@ -30,6 +30,9 @@
       <nav class="main-header__navigation hidden">
         <ul class="main-header__navigation-list">
           <li class="main-header__navigation-item">
+            <a class="main-header__navigation-link main-header__shopping-cart" href="#">Корзина</a>
+          </li>
+          <li class="main-header__navigation-item">
             <a class="main-header__navigation-link" href="#about">О компании</a>
           </li>
           <li class="main-header__navigation-item">
@@ -318,6 +321,7 @@
 		</section>
   </main>
   <a class="anchor"></a>
+
   <div class="modal modal-consultation">
     <div class="modal-consultation__inner-container">
       <p>Задайте вопрос и наш дизайнер проконсультирует вас в ближайшее время</p>
@@ -338,12 +342,21 @@
       <span class="focus-trap focus-trap--lower" tabindex="0" aria-hidden="true"></span>
     </div>
   </div>
+
   <div class="modal modal-feedback">
     <div class="modal-feedback__inner-container">
       <b>Спасибо!</b>
       <p>Ваш вопрос успешно отправлен и наш менеджер перезвонит вам в указанное время.</p>
     </div>
   </div>
+
+  <div class="modal modal-shopping-cart">
+    <div class="modal-shopping-cart__inner-container">
+      <div class="modal-shopping-cart__basket"></div>
+      <div class="modal-shopping-cart__control"></div>
+    </div>
+  </div>
+
   <script src="js/script.js" defer></script>
   <!-- <script src="js/min-script.js" defer></script> -->
 </body>

@@ -121,3 +121,17 @@
   padding-top: 12px;
   padding-bottom: 12px;
 }
+
+.main-header__shopping-cart {
+  position: relative;
+  border-bottom: 1px solid @light-brown-color;
+}
+
+.main-header__shopping-cart::before {
+  .pseudo-element;
+  background-image: url("../img/svg/shopping_cart-24dp.svg");
+  width: 24px;
+  height: 24px;
+  top: center;
+  right: 5px;
+}

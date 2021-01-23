@@ -1,7 +1,5 @@
 'use strict';
 
-/* ДАВАЙ-КА, ПОЖАЛУЙ, ДЛЯ КАЖДОГО СКРИПТА ОТДЕЛЬНЫЙ ФАЙЛ И ПОТОМ СОБИРАЙ КАК СТИЛИ ГАЛПОМ */
-
 
 
 /* Menu open-close script */
@@ -51,62 +49,6 @@ const go = () => {
 
 window.addEventListener('scroll', showAnchor);
 anchor.addEventListener('click', go);
-
-
-
-/* Modal-consultation script */
-
-const askQuestionButton = document.querySelector(".promo__button");
-const modalConsultation = document.querySelector(".modal-consultation");
-const modalConsultationCloseButton = modalConsultation.querySelector(".modal-consultation__close");
-const modalConsultationSendButton = modalConsultation.querySelector(".modal-consultation__send");
-const modalConsultationTraps = modalConsultation.querySelectorAll(".focus-trap");
-
-const modalConsultationOpen = () => {
-  document.body.classList.add("overlay");
-  modalConsultation.classList.add("is-opened");
-  modalConsultation.querySelector("textarea").focus();
-  document.addEventListener("keydown", onEscKeyDown);
-  document.querySelector(".overlay").addEventListener("click", onOverlayClick);
-}
-
-const modalConsultationClose = () => {
-  document.body.classList.remove("overlay");
-  modalConsultation.classList.remove("is-opened");
-  document.removeEventListener("keydown", onEscKeyDown);
-  document.body.removeEventListener("click", onOverlayClick);
-}
-
-const onEscKeyDown = (evt) => {
-  if (evt.key === "Escape" || evt.key === "Esc") {
-    modalConsultationClose();
-  }
-};
-
-const onOverlayClick = (evt) => {
-  if (evt.target.className === "overlay") {
-    modalConsultationClose();
-  };
-};
-
-askQuestionButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
-  evt.stopPropagation() 
-  modalConsultationOpen();
-});
-
-modalConsultationCloseButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
-  modalConsultationClose();
-});
-
-modalConsultationTraps.forEach(element => element.addEventListener("focus", () => {
-  if (element.classList.contains("focus-trap--upper")) {
-    modalConsultation.querySelector(".modal-consultation__close").focus();
-  } else {
-    modalConsultation.querySelector("textarea").focus();
-  }
-}));
 
 
 
@@ -348,6 +290,77 @@ if (supportsVideo) {
 
 
 
+/* CARDS SCRIPT */
+const cards = document.querySelectorAll(".production__card-item");
+
+console.log(cards[0].querySelector(".production__card-heading").textContent);
+
+cards.forEach(card => card.addEventListener("click", () => {
+  console.log(`Товар "${card.querySelector(".production__card-heading").textContent}" добавлен в корзину`);
+}));
+
+
+
+/*----- MODALS BLOCK -----*/
+
+/* Modals-common */
+
+/* Modal-consultation script */
+
+const askQuestionButton = document.querySelector(".promo__button");
+const modalConsultation = document.querySelector(".modal-consultation");
+const modalConsultationCloseButton = modalConsultation.querySelector(".modal-consultation__close");
+const modalConsultationSendButton = modalConsultation.querySelector(".modal-consultation__send");
+const modalConsultationTraps = modalConsultation.querySelectorAll(".focus-trap");
+
+const modalConsultationOpen = () => {
+  document.body.classList.add("overlay");
+  modalConsultation.classList.add("is-opened");
+  modalConsultation.querySelector("textarea").focus();
+  document.addEventListener("keydown", onEscKeyDown);
+  document.querySelector(".overlay").addEventListener("click", onOverlayClick);
+}
+
+const modalConsultationClose = () => {
+  document.body.classList.remove("overlay");
+  modalConsultation.classList.remove("is-opened");
+  document.removeEventListener("keydown", onEscKeyDown);
+  document.body.removeEventListener("click", onOverlayClick);
+}
+
+const onEscKeyDown = (evt) => {
+  if (evt.key === "Escape" || evt.key === "Esc") {
+    modalConsultationClose();
+  }
+};
+
+const onOverlayClick = (evt) => {
+  if (evt.target.className === "overlay") {
+    modalConsultationClose();
+  };
+};
+
+askQuestionButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  evt.stopPropagation() 
+  modalConsultationOpen();
+});
+
+modalConsultationCloseButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  modalConsultationClose();
+});
+
+modalConsultationTraps.forEach(element => element.addEventListener("focus", () => {
+  if (element.classList.contains("focus-trap--upper")) {
+    modalConsultation.querySelector(".modal-consultation__close").focus();
+  } else {
+    modalConsultation.querySelector("textarea").focus();
+  }
+}));
+
+
+
 /* FEEDBACK-MODAL SCRIPT */
 const feedbackSendButton = document.querySelector(".feedback__button");
 const modalFeedback = document.querySelector(".modal-feedback");
@@ -367,6 +380,7 @@ const modalFeedbackClose = () => {
 feedbackForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   modalFeedbackOpen();
+  feedbackForm.reset();
   setTimeout(modalFeedbackClose, 3000);
 })
 
