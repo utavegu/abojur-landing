@@ -290,17 +290,6 @@ if (supportsVideo) {
 
 
 
-/* CARDS SCRIPT */
-const cards = document.querySelectorAll(".production__card-item");
-
-console.log(cards[0].querySelector(".production__card-heading").textContent);
-
-cards.forEach(card => card.addEventListener("click", () => {
-  console.log(`Товар "${card.querySelector(".production__card-heading").textContent}" добавлен в корзину`);
-}));
-
-
-
 /*----- MODALS BLOCK -----*/
 
 /* Modals-common */
@@ -309,12 +298,16 @@ const commonModalOpen = () => {
   document.body.classList.add("overlay");
   document.addEventListener("keydown", onEscKeyDown);
   document.querySelector(".overlay").addEventListener("click", onOverlayClick);
+  floatingBasketButton.style.display = "none";
+  anchor.classList.remove('anchor-show');
 }
 
 const commonModalClose = () => {
   document.body.classList.remove("overlay");
   document.removeEventListener("keydown", onEscKeyDown);
   document.body.removeEventListener("click", onOverlayClick);
+  floatingBasketButton.style.display = "block";
+  anchor.classList.add('anchor-show');
 }
 
 const allModalClose = () => {
@@ -411,42 +404,13 @@ feedbackAgree.addEventListener("change", function () {
 })
 
 
-/* SHOPPING-CART MODAL */
-const openCartButton = document.querySelector(".main-header__shopping-cart");
-const modalShoppingCart = document.querySelector(".modal-shopping-cart");
-const closeCartButton = modalShoppingCart.querySelector(".modal-shopping-cart__close-button");
-const modalShoppingCartTraps = modalShoppingCart.querySelectorAll(".focus-trap");
-
-const shoppingCartOpen = () => {
-  commonModalOpen();
-  modalShoppingCart.classList.add("is-opened");
-  modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
-}
-
-openCartButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
-  shoppingCartOpen();
-});
-
-closeCartButton.addEventListener("click", (evt) => {
-  onCloseButtonClick(evt);
-});
-
-modalShoppingCartTraps.forEach(element => element.addEventListener("focus", () => {
-  if (element.classList.contains("focus-trap--upper")) {
-    modalShoppingCart.querySelector(".modal-shopping-cart__order-button").focus();
-  } else {
-    modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
-  }
-}));
-
-
 
 /* Call-back modal */
 
 const callBackButton = document.querySelector(".main-header__call-back");
 const modalCallOrder = document.querySelector(".modal-call-order");
-const closemodalCallOrderButton = document.querySelector(".modal-call-order__cancel-button");
+const closeModalCallOrderButton = modalCallOrder.querySelector(".modal-call-order__cancel-button");
+const submitModalCallOrderButton = modalCallOrder.querySelector(".modal-call-order__submit-button");
 const modalCallOrderTraps = modalCallOrder.querySelectorAll(".focus-trap");
 
 const modalCallOrderOpen = () => {
@@ -460,7 +424,7 @@ callBackButton.addEventListener("click", (evt) => {
   modalCallOrderOpen();
 });
 
-closemodalCallOrderButton.addEventListener("click", (evt) => {
+closeModalCallOrderButton.addEventListener("click", (evt) => {
   onCloseButtonClick(evt);
   modalCallOrder.classList.remove("is-opened");
 });
@@ -475,10 +439,127 @@ modalCallOrderTraps.forEach(element => element.addEventListener("focus", () => {
 
 modalCallOrder.querySelector("form").addEventListener("submit", (evt) => {
   evt.preventDefault();
-  //Сюда псевдокласс с контентом "спасибо, мы вам перезвоним и анимационным появлением слов"... Или анимашку "окей"
-  // Хотя мне тут вообще чото не нравится идея и исполнение с закрытием... подумай лучше
+  submitModalCallOrderButton.setAttribute("disabled", "true");
+  modalCallOrder.querySelector("p").textContent = "Спасибо! В ближайшее время мы вам перезвоним"
   setTimeout(() => {
+    submitModalCallOrderButton.removeAttribute("disabled");
     onCloseButtonClick(evt);
     modalCallOrder.classList.remove("is-opened");
+    modalCallOrder.querySelector("p").textContent = "Оставьте ваш телефон и мы обязательно свяжемся с вами";
+    modalCallOrder.querySelector("form").reset();
   }, 3000);
 })
+
+
+
+/* SHOPPING-CART MODAL and CARDS SCRIPT */
+const openCartButton = document.querySelector(".main-header__shopping-cart"); // Кнопка открытия корзины
+const modalShoppingCart = document.querySelector(".modal-shopping-cart"); // Модалка корзины
+const closeCartButton = modalShoppingCart.querySelector(".modal-shopping-cart__close-button"); // Кнопка закрытия
+const modalShoppingCartTraps = modalShoppingCart.querySelectorAll(".focus-trap"); // Ловушки фокуса
+const cartCont = modalShoppingCart.querySelector(".modal-shopping-cart__basket"); // Место для таблицы товара
+const clearCartButton = modalShoppingCart.querySelector(".modal-shopping-cart__clear-button"); // Кнопка очистки корзины
+const floatingBasketButton = document.querySelector(".aerostat");
+
+const shoppingCartOpen = () => {
+  commonModalOpen();
+  modalShoppingCart.classList.add("is-opened");
+  modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
+  openCart();
+}
+
+openCartButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  shoppingCartOpen();
+});
+
+floatingBasketButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  shoppingCartOpen();
+});
+
+closeCartButton.addEventListener("click", (evt) => {
+  onCloseButtonClick(evt);
+});
+
+clearCartButton.addEventListener("click", () => {
+  localStorage.removeItem('cart');
+	cartCont.innerHTML = 'Корзина очишена';
+})
+
+modalShoppingCartTraps.forEach(element => element.addEventListener("focus", () => {
+  if (element.classList.contains("focus-trap--upper")) {
+    modalShoppingCart.querySelector(".modal-shopping-cart__order-button").focus();
+  } else {
+    modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
+  }
+}));
+
+
+/* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
+
+const cards = document.querySelectorAll(".production__card-item"); // Все карточки товара
+
+// Навесить слушатель добавления в корзину на каждую карточку товара
+cards.forEach(card => card.querySelector(".production__card-button").addEventListener("click", addToCart));
+
+// Записываем данные в LocalStorage
+const setCartData = (itemList) => localStorage.setItem('cart', JSON.stringify(itemList));
+
+// Получаем данные из LocalStorage
+const getCartData = () => JSON.parse(localStorage.getItem('cart'));
+
+// Функция добавления в корзину
+function addToCart () {
+  const productList = getCartData() || {};
+  const productCard = this.parentNode.parentNode;
+  const productArticle = this.getAttribute('data-id');
+	const productTitle = productCard.querySelector('.production__card-heading').innerHTML;
+  const productPrice = productCard.querySelector('.production__card-price').innerHTML;
+	if (productList.hasOwnProperty(productArticle)) { 
+		productList[productArticle].count++;
+	} else {
+		productList[productArticle] = {
+      title: productTitle,
+      price: productPrice,
+      count: 1
+    };
+  }
+  setCartData(productList);
+}
+
+// Открываем корзину со списком добавленных товаров
+function openCart () {
+	const productList = getCartData();
+  let renderList = '';
+	if (productList !== null) {
+    renderList += `<table class="shopping_list"><tr><th>Наименование</th><th>Цена</th><th>Кол-во</th></tr>`;
+      for (const product in productList) {
+        renderList += `<tr><td>${productList[product].title}</td><td>${productList[product].price}</td><td>${productList[product].count}</td><td><button class="product-add" data-id=${product}>+</button></td><td><button class="product-remove" data-id=${product}>х</button></td><td><button class="product-subtract" data-id=${product}>-</button></td></tr>`;
+      }
+    renderList += `</table>`;
+    cartCont.innerHTML = renderList;
+
+    const addButtons = cartCont.querySelectorAll(".product-add");
+    addButtons.forEach(button => button.addEventListener("click", () => {
+      productList[button.getAttribute("data-id")].count++;
+      setCartData(productList);
+    }))
+
+    const subtractButtons = cartCont.querySelectorAll(".product-subtract");
+    subtractButtons.forEach(button => button.addEventListener("click", () => {
+      productList[button.getAttribute("data-id")].count--;
+      setCartData(productList);
+    }))
+
+    /*
+    1) Вынести в функции адд, суб и рендер (сначала её)
+    2) Реализовать функцию ремув
+    */
+
+
+	} else {
+		cartCont.innerHTML = 'В корзине пусто';
+  }
+}
+

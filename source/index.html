@@ -98,7 +98,7 @@
               <h3 class="production__card-heading heading">Подушки Casa Nova</h3>
               <p class="production__card-price">от 15 000 ₽</p>
               <p class="production__card-clarification">*стоимость варьируется в зависимости от размера изделия</p>
-              <a class="production__card-button button">Заказать</a>
+              <a class="production__card-button button" data-id="id-1">Заказать</a>
             </div>
           </li>
           <li class="production__card-item">
@@ -107,7 +107,7 @@
               <h3 class="production__card-heading heading">Покрывало ШАНТИ</h3>
               <p class="production__card-price">от 13 660 ₽</p>
               <p class="production__card-clarification">*стоимость варьируется в зависимости от размера изделия</p>
-              <a class="production__card-button button">Заказать</a>
+              <a class="production__card-button button" data-id="id-2">Заказать</a>
             </div>
           </li>
           <li class="production__card-item">
@@ -116,7 +116,7 @@
               <h3 class="production__card-heading heading">Подушки Elixir №7</h3>
               <p class="production__card-price">от 15 000 ₽</p>
               <p class="production__card-clarification">*стоимость варьируется в зависимости от размера изделия</p>
-              <a class="production__card-button button">Заказать</a>
+              <a class="production__card-button button" data-id="id-3">Заказать</a>
             </div>
           </li>
           <li class="production__card-item production__card-item--horizontal">
@@ -125,7 +125,7 @@
               <h3 class="production__card-heading heading">Подушки Basic</h3>
               <p class="production__card-price">от 11 000 ₽</p>
               <p class="production__card-clarification">*стоимость варьируется в зависимости от размера изделия</p>
-              <a class="production__card-button button">Заказать</a>
+              <a class="production__card-button button" data-id="id-4">Заказать</a>
             </div>
           </li>
           <li class="production__card-item production__card-item--horizontal">
@@ -134,7 +134,7 @@
               <h3 class="production__card-heading heading">Подушки Vintage</h3>
               <p class="production__card-price">от 17 000 ₽</p>
               <p class="production__card-clarification">*стоимость варьируется в зависимости от размера изделия</p>
-              <a class="production__card-button button">Заказать</a>
+              <a class="production__card-button button" data-id="id-5">Заказать</a>
             </div>
           </li>
 				</ul>
@@ -321,6 +321,7 @@
 		</section>
   </main>
   <a class="anchor"></a>
+  <a class="aerostat"></a>
 
   <div class="modal modal-consultation">
     <div class="modal-consultation__inner-container">
@@ -358,7 +359,7 @@
       <span class="focus-trap focus-trap--upper" tabindex="0" aria-hidden="true"></span>
       <button class="modal-shopping-cart__close-button button" type="button">Закрыть корзину</button>
       <button class="modal-shopping-cart__clear-button button" type="button">Очистить корзину</button>
-      <button class="modal-shopping-cart__order-button button" type="button">Оформить заказ</button>
+      <button class="modal-shopping-cart__order-button button" type="button" title="Бэкэнд не подключен =)" disabled>Оформить заказ</button>
       <span class="focus-trap focus-trap--lower" tabindex="0" aria-hidden="true"></span>
     </div>
   </div>
@@ -366,10 +367,15 @@
   <div class="modal modal-call-order">
     <div class="modal-call-order__inner-container">
       <form action="">
+        <p>Оставьте ваш телефон и мы обязательно свяжемся с вами</p>
         <span class="focus-trap focus-trap--upper" tabindex="0" aria-hidden="true"></span>
         <label>
-          Оставьте ваш телефон и мы обязательно свяжемся с вами
-          <input type="tel" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$">
+          <span class="visually-hidden">Телефон</span>
+          <input type="tel" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" placeholder="Телефон" required>
+        </label>
+        <label>
+          <span class="visually-hidden">Как к вам обращаться?</span>
+          <input type="text" placeholder="Как к вам обращаться?">
         </label>
         <button class="modal-call-order__cancel-button button" type="button">Отмена</button>
         <button class="modal-call-order__submit-button button" type="submit">Отправить</button>
