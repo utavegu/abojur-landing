@@ -63,7 +63,10 @@
   margin: 10px;
   border: 5px solid @light-brown-color;
   border-radius: 50px;
-  overflow: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .modal-shopping-cart button,
@@ -138,4 +141,22 @@
   margin-top: 50px;
   margin-right: 100px;
   float: right;
+}
+
+.shopping-list {
+  width: 100%;
+}
+
+.shopping-list th {
+  color: @light-brown-color;
+}
+
+.shopping-list button {
+  color: #fff;
+  cursor: pointer;
+}
+
+.shopping-list td:first-child {
+  text-align: left;
+  padding-left: 10px;
 }

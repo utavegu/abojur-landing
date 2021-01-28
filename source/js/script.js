@@ -460,6 +460,7 @@ const modalShoppingCartTraps = modalShoppingCart.querySelectorAll(".focus-trap")
 const cartCont = modalShoppingCart.querySelector(".modal-shopping-cart__basket"); // Место для таблицы товара
 const clearCartButton = modalShoppingCart.querySelector(".modal-shopping-cart__clear-button"); // Кнопка очистки корзины
 const floatingBasketButton = document.querySelector(".aerostat");
+let countOfProducts = document.querySelector(".aerostat span"); // Индикатор количества товара
 
 const shoppingCartOpen = () => {
   commonModalOpen();
@@ -480,6 +481,8 @@ floatingBasketButton.addEventListener("click", (evt) => {
 
 closeCartButton.addEventListener("click", (evt) => {
   onCloseButtonClick(evt);
+  countOfProducts.textContent = calculateProducts(getCartData()); // И ВОТ ТОЖЕ САМОЕ НА ЭСКЕЙП И ОВЕРЛЭЙ
+  // И НА ЗАГРУЗКУ ДОКУМЕНТА (или не его...)
 });
 
 clearCartButton.addEventListener("click", () => {
@@ -494,6 +497,18 @@ modalShoppingCartTraps.forEach(element => element.addEventListener("focus", () =
     modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
   }
 }));
+
+
+
+const calculateProducts = (data) => {
+  let productsQuantity = 0;
+  for (const product in data) {
+    productsQuantity += data[product].count;
+  }
+  return productsQuantity;
+}
+
+
 
 
 /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
@@ -526,40 +541,57 @@ function addToCart () {
     };
   }
   setCartData(productList);
+  countOfProducts.textContent = calculateProducts(getCartData());
 }
 
 // Открываем корзину со списком добавленных товаров
 function openCart () {
-	const productList = getCartData();
-  let renderList = '';
-	if (productList !== null) {
-    renderList += `<table class="shopping_list"><tr><th>Наименование</th><th>Цена</th><th>Кол-во</th></tr>`;
-      for (const product in productList) {
-        renderList += `<tr><td>${productList[product].title}</td><td>${productList[product].price}</td><td>${productList[product].count}</td><td><button class="product-add" data-id=${product}>+</button></td><td><button class="product-remove" data-id=${product}>х</button></td><td><button class="product-subtract" data-id=${product}>-</button></td></tr>`;
+  const productList = getCartData();
+  const renderTable = (data) => {
+    let renderList = '';
+    let totalPrice = 0;
+    renderList += `<table class="shopping-list"><tr><th>Наименование</th><th>Цена</th><th>Кол-во</th></tr>`;
+      for (const product in data) {
+        totalPrice += Number(data[product].price.replace(/\D+/g,"")) * data[product].count;
+        renderList += `<tr><td>${data[product].title}</td><td>${data[product].price}</td><td>${data[product].count}</td><td><button class="product-add" title="Добавить товар" data-id=${product}>+</button></td><td><button class="product-remove" title="Удалить товар" data-id=${product}>х</button></td><td><button class="product-subtract" title="Убавить товар" data-id=${product}>-</button></td></tr>`;
       }
-    renderList += `</table>`;
+    renderList += `</table><p>Итого: ${totalPrice} ₽</p>`;
     cartCont.innerHTML = renderList;
+
+    // ВОТ ТУТ ОТРЕФАКТОРИ, КОГДА ПОПРАВИШЬСЯ
+
+    const removeButtons = cartCont.querySelectorAll(".product-remove");
+    removeButtons.forEach(button => button.addEventListener("click", () => {
+      delete productList[button.getAttribute("data-id")];
+      setCartData(productList);
+      renderTable(getCartData());
+    }));
 
     const addButtons = cartCont.querySelectorAll(".product-add");
     addButtons.forEach(button => button.addEventListener("click", () => {
       productList[button.getAttribute("data-id")].count++;
       setCartData(productList);
-    }))
+      renderTable(getCartData());
+    }));
 
     const subtractButtons = cartCont.querySelectorAll(".product-subtract");
     subtractButtons.forEach(button => button.addEventListener("click", () => {
       productList[button.getAttribute("data-id")].count--;
+      if (productList[button.getAttribute("data-id")].count < 1) {
+        delete productList[button.getAttribute("data-id")];
+      }
       setCartData(productList);
+      renderTable(getCartData());
     }))
+  }
 
-    /*
-    1) Вынести в функции адд, суб и рендер (сначала её)
-    2) Реализовать функцию ремув
-    */
-
-
+	if (productList !== null) {
+    renderTable(productList);
 	} else {
 		cartCont.innerHTML = 'В корзине пусто';
   }
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  countOfProducts.textContent = calculateProducts(getCartData());
+})
