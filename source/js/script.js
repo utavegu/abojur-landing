@@ -1,8 +1,6 @@
 'use strict';
 
-
-
-/* Menu open-close script */
+/* MENU OPEN-CLOSE SCRIPT */
 
 const menuBurgerButton = document.querySelector(".main-header__menu");
 const headerNavigation = document.querySelector(".main-header__navigation");
@@ -14,9 +12,10 @@ menuBurgerButton.addEventListener("click", (evt) => {
 
 
 
-/* Anchor script */
+/* ANCHOR SCRIPT */
 
 const anchor = document.querySelector('.anchor');
+const floatingBasketButton = document.querySelector(".aerostat");
 
 const showAnchor = () => {
   if (window.pageYOffset > document.documentElement.clientHeight) {
@@ -292,7 +291,7 @@ if (supportsVideo) {
 
 /*----- MODALS BLOCK -----*/
 
-/* Modals-common */
+/* MODALS-COMMON */
 
 const commonModalOpen = () => {
   document.body.classList.add("overlay");
@@ -339,7 +338,7 @@ const onCloseButtonClick = (evt) => {
 
 
 
-/* Modal-consultation script */
+/* MODAL-CONSULTATION SCRIPT */
 
 const askQuestionButton = document.querySelector(".promo__button");
 const modalConsultation = document.querySelector(".modal-consultation");
@@ -377,6 +376,7 @@ const feedbackSendButton = document.querySelector(".feedback__button");
 const modalFeedback = document.querySelector(".modal-feedback");
 const feedbackAgree = document.querySelector(".feedback__checkbox");
 const feedbackForm = document.querySelector(".feedback form");
+const feedbackPhone = document.getElementById("your-phone");
 
 const modalFeedbackOpen = () => {
   commonModalOpen();
@@ -403,15 +403,24 @@ feedbackAgree.addEventListener("change", function () {
   this.setCustomValidity("");
 })
 
+feedbackPhone.addEventListener('input', () => {
+  if (feedbackPhone.validity.patternMismatch) {
+    feedbackPhone.setCustomValidity('Пока что это не похоже на телефон =)');
+  } else {
+    feedbackPhone.setCustomValidity('');
+  }
+});
 
 
-/* Call-back modal */
+
+/* CALLBACK MODAL */
 
 const callBackButton = document.querySelector(".main-header__call-back");
 const modalCallOrder = document.querySelector(".modal-call-order");
 const closeModalCallOrderButton = modalCallOrder.querySelector(".modal-call-order__cancel-button");
 const submitModalCallOrderButton = modalCallOrder.querySelector(".modal-call-order__submit-button");
 const modalCallOrderTraps = modalCallOrder.querySelectorAll(".focus-trap");
+const orderPhoneInput = modalCallOrder.querySelector(".modal-call-order__phone-input");
 
 const modalCallOrderOpen = () => {
   commonModalOpen();
@@ -450,55 +459,30 @@ modalCallOrder.querySelector("form").addEventListener("submit", (evt) => {
   }, 3000);
 })
 
+orderPhoneInput.addEventListener('input', () => {
+  if (orderPhoneInput.validity.patternMismatch) {
+    orderPhoneInput.setCustomValidity('Пока что это не похоже на телефон =)');
+  } else {
+    orderPhoneInput.setCustomValidity('');
+  }
+});
+
 
 
 /* SHOPPING-CART MODAL and CARDS SCRIPT */
-const openCartButton = document.querySelector(".main-header__shopping-cart"); // Кнопка открытия корзины
-const modalShoppingCart = document.querySelector(".modal-shopping-cart"); // Модалка корзины
-const closeCartButton = modalShoppingCart.querySelector(".modal-shopping-cart__close-button"); // Кнопка закрытия
-const modalShoppingCartTraps = modalShoppingCart.querySelectorAll(".focus-trap"); // Ловушки фокуса
-const cartCont = modalShoppingCart.querySelector(".modal-shopping-cart__basket"); // Место для таблицы товара
-const clearCartButton = modalShoppingCart.querySelector(".modal-shopping-cart__clear-button"); // Кнопка очистки корзины
-const floatingBasketButton = document.querySelector(".aerostat");
-let countOfProducts = document.querySelector(".aerostat span"); // Индикатор количества товара
 
-const shoppingCartOpen = () => {
-  commonModalOpen();
-  modalShoppingCart.classList.add("is-opened");
-  modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
-  openCart();
-}
+const openCartButton = document.querySelector(".main-header__shopping-cart");
+const modalShoppingCart = document.querySelector(".modal-shopping-cart");
+const closeCartButton = modalShoppingCart.querySelector(".modal-shopping-cart__close-button");
+const modalShoppingCartTraps = modalShoppingCart.querySelectorAll(".focus-trap");
+const cartCont = modalShoppingCart.querySelector(".modal-shopping-cart__basket");
+const clearCartButton = modalShoppingCart.querySelector(".modal-shopping-cart__clear-button");
+let countOfProducts = document.querySelector(".aerostat span");
+const cards = document.querySelectorAll(".production__card-item");
 
-openCartButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
-  shoppingCartOpen();
-});
+const setCartData = (itemList) => localStorage.setItem('cart', JSON.stringify(itemList));
 
-floatingBasketButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
-  shoppingCartOpen();
-});
-
-closeCartButton.addEventListener("click", (evt) => {
-  onCloseButtonClick(evt);
-  countOfProducts.textContent = calculateProducts(getCartData()); // И ВОТ ТОЖЕ САМОЕ НА ЭСКЕЙП И ОВЕРЛЭЙ
-  // И НА ЗАГРУЗКУ ДОКУМЕНТА (или не его...)
-});
-
-clearCartButton.addEventListener("click", () => {
-  localStorage.removeItem('cart');
-	cartCont.innerHTML = 'Корзина очишена';
-})
-
-modalShoppingCartTraps.forEach(element => element.addEventListener("focus", () => {
-  if (element.classList.contains("focus-trap--upper")) {
-    modalShoppingCart.querySelector(".modal-shopping-cart__order-button").focus();
-  } else {
-    modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
-  }
-}));
-
-
+const getCartData = () => JSON.parse(localStorage.getItem('cart'));
 
 const calculateProducts = (data) => {
   let productsQuantity = 0;
@@ -508,24 +492,50 @@ const calculateProducts = (data) => {
   return productsQuantity;
 }
 
+const openCart = () => {
+  const productList = getCartData();
 
+  const renderTable = (data) => {
+    let renderList = '';
+    let totalPrice = 0;
+    renderList += `<table class="shopping-list"><tr><th>Наименование</th><th>Цена</th><th>Кол-во</th></tr>`;
+    for (const product in data) {
+      totalPrice += Number(data[product].price.replace(/\D+/g,"")) * data[product].count;
+      renderList += `<tr><td>${data[product].title}</td><td>${data[product].price}</td><td>${data[product].count}</td><td><button class="product-add" title="Добавить товар" data-id=${product}>+</button></td><td><button class="product-remove" title="Удалить товар" data-id=${product}>х</button></td><td><button class="product-subtract" title="Убавить товар" data-id=${product}>-</button></td></tr>`;
+    }
+    renderList += `</table><p>Итого: ${totalPrice} ₽</p>`;
+    cartCont.innerHTML = renderList;
 
+    const manageProducts = function () {
+      switch (this.className) {
+        case "product-add":
+          productList[this.getAttribute("data-id")].count++;
+          break;
+        case "product-subtract":
+          productList[this.getAttribute("data-id")].count--;
+          if (productList[this.getAttribute("data-id")].count < 1) {
+            delete productList[this.getAttribute("data-id")];
+          }
+          break;
+        case "product-remove":
+          delete productList[this.getAttribute("data-id")];
+          break;
+      }
+      setCartData(productList);
+      renderTable(getCartData());
+      countOfProducts.textContent = calculateProducts(getCartData());
+    }
+    cartCont.querySelectorAll("[data-id]").forEach(button => button.addEventListener("click", manageProducts));
+  }
 
-/* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
+	if (productList !== null) {
+    renderTable(productList);
+	} else {
+		cartCont.innerHTML = 'В корзине пусто';
+  }
+}
 
-const cards = document.querySelectorAll(".production__card-item"); // Все карточки товара
-
-// Навесить слушатель добавления в корзину на каждую карточку товара
-cards.forEach(card => card.querySelector(".production__card-button").addEventListener("click", addToCart));
-
-// Записываем данные в LocalStorage
-const setCartData = (itemList) => localStorage.setItem('cart', JSON.stringify(itemList));
-
-// Получаем данные из LocalStorage
-const getCartData = () => JSON.parse(localStorage.getItem('cart'));
-
-// Функция добавления в корзину
-function addToCart () {
+const addToCart = function () {
   const productList = getCartData() || {};
   const productCard = this.parentNode.parentNode;
   const productArticle = this.getAttribute('data-id');
@@ -544,54 +554,44 @@ function addToCart () {
   countOfProducts.textContent = calculateProducts(getCartData());
 }
 
-// Открываем корзину со списком добавленных товаров
-function openCart () {
-  const productList = getCartData();
-  const renderTable = (data) => {
-    let renderList = '';
-    let totalPrice = 0;
-    renderList += `<table class="shopping-list"><tr><th>Наименование</th><th>Цена</th><th>Кол-во</th></tr>`;
-      for (const product in data) {
-        totalPrice += Number(data[product].price.replace(/\D+/g,"")) * data[product].count;
-        renderList += `<tr><td>${data[product].title}</td><td>${data[product].price}</td><td>${data[product].count}</td><td><button class="product-add" title="Добавить товар" data-id=${product}>+</button></td><td><button class="product-remove" title="Удалить товар" data-id=${product}>х</button></td><td><button class="product-subtract" title="Убавить товар" data-id=${product}>-</button></td></tr>`;
-      }
-    renderList += `</table><p>Итого: ${totalPrice} ₽</p>`;
-    cartCont.innerHTML = renderList;
-
-    // ВОТ ТУТ ОТРЕФАКТОРИ, КОГДА ПОПРАВИШЬСЯ
-
-    const removeButtons = cartCont.querySelectorAll(".product-remove");
-    removeButtons.forEach(button => button.addEventListener("click", () => {
-      delete productList[button.getAttribute("data-id")];
-      setCartData(productList);
-      renderTable(getCartData());
-    }));
-
-    const addButtons = cartCont.querySelectorAll(".product-add");
-    addButtons.forEach(button => button.addEventListener("click", () => {
-      productList[button.getAttribute("data-id")].count++;
-      setCartData(productList);
-      renderTable(getCartData());
-    }));
-
-    const subtractButtons = cartCont.querySelectorAll(".product-subtract");
-    subtractButtons.forEach(button => button.addEventListener("click", () => {
-      productList[button.getAttribute("data-id")].count--;
-      if (productList[button.getAttribute("data-id")].count < 1) {
-        delete productList[button.getAttribute("data-id")];
-      }
-      setCartData(productList);
-      renderTable(getCartData());
-    }))
-  }
-
-	if (productList !== null) {
-    renderTable(productList);
-	} else {
-		cartCont.innerHTML = 'В корзине пусто';
-  }
+const shoppingCartOpen = () => {
+  commonModalOpen();
+  modalShoppingCart.classList.add("is-opened");
+  modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
+  openCart();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   countOfProducts.textContent = calculateProducts(getCartData());
 })
+
+cards.forEach(card => card.querySelector(".production__card-button").addEventListener("click", addToCart));
+
+openCartButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  shoppingCartOpen();
+});
+
+floatingBasketButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  shoppingCartOpen();
+});
+
+closeCartButton.addEventListener("click", (evt) => {
+  onCloseButtonClick(evt);
+  countOfProducts.textContent = calculateProducts(getCartData());
+});
+
+clearCartButton.addEventListener("click", () => {
+  localStorage.removeItem('cart');
+  countOfProducts.textContent = calculateProducts(getCartData());
+	cartCont.innerHTML = 'Корзина очишена';
+})
+
+modalShoppingCartTraps.forEach(element => element.addEventListener("focus", () => {
+  if (element.classList.contains("focus-trap--upper")) {
+    modalShoppingCart.querySelector(".modal-shopping-cart__clear-button").focus();
+  } else {
+    modalShoppingCart.querySelector(".modal-shopping-cart__close-button").focus();
+  }
+}));

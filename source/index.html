@@ -337,7 +337,7 @@
           <label for="phone">Ваш телефон</label>
           <input type="tel" id="phone" name="phone" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$">
         </div>
-        <button class="modal-consultation__send button" type="submit" data-description="Из соображений безопасности почтовый адрес отцеплен">Отправить</button>
+        <button class="modal-consultation__send button" type="submit" data-description="Из соображений безопасности почтовый адрес отцеплен (для отправки формы без бэкэнда используется сервис https://formspree.io/)">Отправить</button>
       </form>
       <button class="modal-consultation__close button" type="button">Отмена</button>
       <span class="focus-trap focus-trap--lower" tabindex="0" aria-hidden="true"></span>
@@ -371,7 +371,7 @@
         <span class="focus-trap focus-trap--upper" tabindex="0" aria-hidden="true"></span>
         <label>
           <span class="visually-hidden">Телефон</span>
-          <input type="tel" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" placeholder="Телефон" required>
+          <input class="modal-call-order__phone-input" type="tel" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" placeholder="Телефон" required>
         </label>
         <label>
           <span class="visually-hidden">Как к вам обращаться?</span>
