@@ -536,6 +536,9 @@ const openCart = () => {
 }
 
 const addToCart = function () {
+
+  console.log(this);
+
   const productList = getCartData() || {};
   const productCard = this.parentNode.parentNode;
   const productArticle = this.getAttribute('data-id');
@@ -554,6 +557,14 @@ const addToCart = function () {
   countOfProducts.textContent = calculateProducts(getCartData());
 }
 
+const onEnterKeyDown = (evt) => { // Поменяй на обычную
+  // ВОТ ТУТ ПОХОЖЕ БИНД ИЛИ КОЛЛ МОГЛИ БЫ ПОМОЧЬ ЭПЛАЙ
+  if (evt.key === "Enter") {
+    addToCart();
+    // console.log(evt.target);
+  }
+};
+
 const shoppingCartOpen = () => {
   commonModalOpen();
   modalShoppingCart.classList.add("is-opened");
@@ -566,6 +577,8 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 cards.forEach(card => card.querySelector(".production__card-button").addEventListener("click", addToCart));
+
+cards.forEach(card => card.querySelector(".production__card-button").addEventListener("keydown", onEnterKeyDown));
 
 openCartButton.addEventListener("click", (evt) => {
   evt.preventDefault();
