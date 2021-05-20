@@ -537,7 +537,7 @@ const openCart = () => {
 
 const addToCart = function () {
 
-  console.log(this);
+  // console.log(this);
 
   const productList = getCartData() || {};
   const productCard = this.parentNode.parentNode;
@@ -558,7 +558,7 @@ const addToCart = function () {
 }
 
 const onEnterKeyDown = (evt) => { // Поменяй на обычную
-  // ВОТ ТУТ ПОХОЖЕ БИНД ИЛИ КОЛЛ МОГЛИ БЫ ПОМОЧЬ ЭПЛАЙ
+  // ВОТ ТУТ ПОХОЖЕ БИНД / КОЛЛ / ЭПЛАЙ МОГЛИ БЫ ПОМОЧЬ
   if (evt.key === "Enter") {
     addToCart();
     // console.log(evt.target);
