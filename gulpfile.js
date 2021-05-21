@@ -29,7 +29,9 @@ var minhtml = require("gulp-minimize");  // минификатор html
 var csso = require("gulp-csso");  // минификатор css
 var minjs = require("gulp-uglify");  // минификатор js
 
-// Так, а наверняка ведь есть и какая-нибудь штука, помогающая деплоить на гх-пагес, создавая сразу отдельную ветку..
+const ghPages = require('gh-pages');
+const path = require('path');
+
 
 /* ЗАДАЧИ */
 
@@ -141,6 +143,12 @@ gulp.task("copy other", function() {
 		.pipe(gulp.dest("build"));
 });
 
+// ДЕПЛОЙ
+function deploy(cb) {
+  ghPages.publish(path.join(process.cwd(), './build'), cb);
+}
+exports.deploy = deploy;
+
 
 
 /* КОМАНДЫ */
@@ -155,8 +163,8 @@ gulp.task("start", gulp.series(
 gulp.task("build", gulp.series(
   "clean build",
   "development",
-  // "images optimization",
-  // "create webp",
+  "images optimization",
+  "create webp",
   // "create vector sprite",
   "html for production",
   "css for production",
