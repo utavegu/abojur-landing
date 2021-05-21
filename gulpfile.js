@@ -81,15 +81,16 @@ gulp.task("create webp", function() {
 })
 
 // Создание векторного спрайта
-gulp.task("create vector sprite", function() {
-  return gulp.src("source/img/svg/**/*.svg")
-  .pipe(svgstore({
-    inlineSvg: true
-  }))
-  .pipe(rename("sprite.svg"))
-  .pipe(gulp.dest("source/img/svg"))
-  .pipe(gulp.dest("build/img/svg"));
-})
+// gulp.task("create vector sprite", function() {
+//   return gulp.src("source/img/svg/**/*.svg")
+//   .pipe(svgstore({
+//     inlineSvg: true
+//   }))
+//   .pipe(rename("sprite.svg"))
+//   .pipe(gulp.dest("source/img/svg"))
+//   .pipe(gulp.dest("build/img/svg"));
+// })
+
 
 
 // ПРЕДЕПЛОЙ
@@ -132,7 +133,8 @@ gulp.task("copy other", function() {
 	return gulp.src([
     "source/fonts/**/*.{woff,woff2}",
     "source/*.{ico,png}",
-    "source/video/**/*"
+    "source/video/*.{mp4,webm,ogg}"
+    // "source/video/**/*"
     ], {
 			base: "source"
 		})
@@ -153,9 +155,9 @@ gulp.task("start", gulp.series(
 gulp.task("build", gulp.series(
   "clean build",
   "development",
-  "images optimization",
-  "create webp",
-  "create vector sprite",
+  // "images optimization",
+  // "create webp",
+  // "create vector sprite",
   "html for production",
   "css for production",
   "compress js",

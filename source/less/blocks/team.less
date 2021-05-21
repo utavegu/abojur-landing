@@ -19,6 +19,9 @@
 .team .container::after {
   .pseudo-element;
   background-image: url("../img/team-1.jpg");
+  @media (min-resolution: @retina-dpi), (min-resolution: @retina-dppx) {
+    background-image: url("../img/team-1@2x.jpg");
+  }
   width: 1165px;
   height: 420px;
   bottom: 120px;
