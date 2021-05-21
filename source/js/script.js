@@ -143,7 +143,7 @@ if (supportsVideo) {
     filledTimeline.style.width = Math.floor((videoDisplay.currentTime / videoDisplay.duration) * 100) + '%';
     currentTimeIndicator.textContent = getTime(videoDisplay.currentTime);
     if (videoDisplay.ended) {
-      playPauseButton.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
+      // playPauseButton.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
     }
   });
 
@@ -156,11 +156,11 @@ if (supportsVideo) {
   const playPauseFunction = () => {
     if (videoDisplay.paused || videoDisplay.ended) {
       videoDisplay.play();
-      playPauseButton.style = 'background-image: url("../img/svg/player/pause-white-18dp.svg")';
+      // playPauseButton.style = 'background-image: url("../img/svg/player/pause-white-18dp.svg")';
     }
     else {
       videoDisplay.pause();
-      playPauseButton.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
+      // playPauseButton.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
     }
   }
   
@@ -171,7 +171,7 @@ if (supportsVideo) {
     videoDisplay.pause();
     videoDisplay.currentTime = 0;
     fullTimeline.value = 0;
-    playPauseButton.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
+    // playPauseButton.style = 'background-image: url("../img/svg/player/play_arrow-white-18dp.svg")';
   });
 
   videoControls.querySelector('.v-controls__rewind-right').addEventListener('click', () => videoDisplay.currentTime += 5);
@@ -211,12 +211,12 @@ if (supportsVideo) {
     videoDisplay.muted = !videoDisplay.muted;
     let previousSoundLevel = videoDisplay.volume;
     if (videoDisplay.muted) {
-      muteButton.style = 'background-image: url("../img/svg/player/volume_off-white-18dp.svg")';
+      // muteButton.style = 'background-image: url("../img/svg/player/volume_off-white-18dp.svg")';
       soundIndicator.value = 0;
       soundIndicator.setAttribute("disabled", "disabled");
     }
     else {
-      muteButton.style = 'background-image: url("../img/svg/player/volume_mute-white-18dp.svg")';
+      // muteButton.style = 'background-image: url("../img/svg/player/volume_mute-white-18dp.svg")';
       soundIndicator.value = previousSoundLevel;
       soundIndicator.removeAttribute("disabled");
     }   
@@ -253,7 +253,7 @@ if (supportsVideo) {
       else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
       else if (document.msExitFullscreen) document.msExitFullscreen();
       setFullscreenData(false);
-      fullscreenButton.style = 'background-image: url("../img/svg/player/fullscreen-white-18dp.svg")';
+      // fullscreenButton.style = 'background-image: url("../img/svg/player/fullscreen-white-18dp.svg")';
     }
     else {
       if (videoContainer.requestFullscreen) videoContainer.requestFullscreen();
@@ -261,7 +261,7 @@ if (supportsVideo) {
       else if (videoContainer.webkitRequestFullScreen) videoDisplay.webkitRequestFullScreen();
       else if (videoContainer.msRequestFullscreen) videoContainer.msRequestFullscreen();
       setFullscreenData(true);
-      fullscreenButton.style = 'background-image: url("../img/svg/player/fullscreen_exit-white-18dp.svg")';
+      // fullscreenButton.style = 'background-image: url("../img/svg/player/fullscreen_exit-white-18dp.svg")';
     }
   }
 
