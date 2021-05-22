@@ -480,9 +480,9 @@ const clearCartButton = modalShoppingCart.querySelector(".modal-shopping-cart__c
 let countOfProducts = document.querySelector(".aerostat span");
 const cards = document.querySelectorAll(".production__card-item");
 
-const setCartData = (itemList) => localStorage.setItem('cart', JSON.stringify(itemList));
+const setCartData = (itemList) => localStorage.setItem('cart-abojur', JSON.stringify(itemList));
 
-const getCartData = () => JSON.parse(localStorage.getItem('cart'));
+const getCartData = () => JSON.parse(localStorage.getItem('cart-abojur'));
 
 const calculateProducts = (data) => {
   let productsQuantity = 0;
@@ -596,7 +596,7 @@ closeCartButton.addEventListener("click", (evt) => {
 });
 
 clearCartButton.addEventListener("click", () => {
-  localStorage.removeItem('cart');
+  localStorage.removeItem('cart-abojur');
   countOfProducts.textContent = calculateProducts(getCartData());
 	cartCont.innerHTML = 'Корзина очишена';
 })
